@@ -1,0 +1,2075 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>अधिकार | Adhikaar - Government Schemes Eligibility Finder</title>
+    <style>
+        /* CSS reset & variables */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --primary-color: #0f2e5a; /* Deep Navy Blue */
+            --primary-hover: #0b2242;
+            --accent-saffron: #ff9933;
+            --accent-green: #128807;
+            --bg-page: #f4f6f9; /* Off-white background */
+            --bg-panel: #ffffff;
+            --text-main: #1c2a38;
+            --text-muted: #556372;
+            --border-color: #ccd1d9;
+            --danger-color: #d9534f;
+            --success-color: #2e7d32;
+            --warning-color: #f57c00;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-page);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        /* Tricolor top border */
+        .tricolor-header {
+            display: flex;
+            height: 5px;
+            width: 100%;
+        }
+        .tricolor-saffron { background-color: var(--accent-saffron); flex: 1; }
+        .tricolor-white { background-color: #ffffff; flex: 1; }
+        .tricolor-green { background-color: var(--accent-green); flex: 1; }
+
+        /* Meta header (NIC Style) */
+        .meta-header {
+            background-color: #ffffff;
+            border-bottom: 1px solid var(--border-color);
+            padding: 4px 16px;
+            font-size: 11px;
+            font-weight: bold;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Main Header */
+        header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 16px 24px;
+            border-bottom: 3px solid var(--accent-saffron);
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .logo-section h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+        }
+        .logo-section p {
+            font-size: 13px;
+            color: #d1d5db;
+        }
+        .lang-selector-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .lang-selector-container label {
+            font-size: 13px;
+            color: #e5e7eb;
+        }
+        .lang-select {
+            padding: 6px 12px;
+            font-size: 14px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: var(--text-main);
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        /* Banner Messages */
+        .banner {
+            max-width: 1200px;
+            margin: 16px auto 0 auto;
+            padding: 12px 16px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .banner-demo {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+        }
+        .banner-live {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        /* Main Layout Grid */
+        .main-container {
+            max-width: 1200px;
+            margin: 16px auto;
+            padding: 0 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Common Panel Styling */
+        .panel {
+            background: var(--bg-panel);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 24px;
+        }
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Mic Button & Controls */
+        .mic-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 24px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border: 1px dashed var(--border-color);
+            border-radius: 4px;
+        }
+        
+        .btn-mic {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            outline: none;
+            user-select: none;
+            margin-bottom: 12px;
+            box-shadow: none;
+        }
+        .btn-mic:active, .btn-mic.recording {
+            background-color: var(--danger-color);
+            border-color: var(--danger-color);
+        }
+        .btn-mic svg {
+            width: 36px;
+            height: 36px;
+            fill: currentColor;
+        }
+
+        .mic-status {
+            font-weight: bold;
+            font-size: 14px;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Presets for Testing */
+        .presets-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+        .presets-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        .btn-preset {
+            padding: 8px 12px;
+            font-size: 12px;
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            color: var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            font-weight: 500;
+        }
+        .btn-preset:hover {
+            background-color: #f1f3f5;
+        }
+
+        /* Form elements */
+        .form-group {
+            margin-bottom: 16px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+        .form-control {
+            width: 100%;
+            padding: 8px 12px;
+            font-size: 14px;
+            border: 1px solid #8e9aa8;
+            border-radius: 4px;
+            background-color: #ffffff;
+            color: var(--text-main);
+            outline: none;
+        }
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 1px var(--primary-color);
+        }
+        textarea.form-control {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 16px;
+            padding-top: 8px;
+        }
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .radio-option input {
+            cursor: pointer;
+        }
+
+        /* Action Buttons */
+        .btn {
+            display: inline-block;
+            width: 100%;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            color: #ffffff;
+            background-color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .btn:hover {
+            background-color: var(--primary-hover);
+        }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        .btn-secondary:hover {
+            background-color: #f1f3f5;
+        }
+
+        /* Result Section UI */
+        .results-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .loading-container {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-top: 4px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Flat NIC Scheme Cards */
+        .scheme-card {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--accent-saffron);
+            border-radius: 4px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .scheme-card-header {
+            font-weight: bold;
+            font-size: 16px;
+            color: var(--primary-color);
+            margin-bottom: 8px;
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 4px;
+        }
+        .scheme-card-benefit {
+            font-size: 14px;
+            color: var(--text-main);
+            margin-bottom: 16px;
+        }
+        .scheme-card-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+        .btn-apply {
+            padding: 6px 12px;
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--primary-color);
+            background-color: transparent;
+            border: 1px solid var(--primary-color);
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .btn-apply:hover {
+            background-color: #e9ecef;
+        }
+
+        /* Audio feedback player */
+        .tts-player {
+            display: none;
+            background-color: #f1f3f5;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .tts-player-status {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        .tts-controls {
+            display: flex;
+            gap: 8px;
+        }
+        .btn-audio-ctrl {
+            background-color: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 4px 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: bold;
+            color: var(--text-main);
+        }
+
+        /* Dialog / Modal details */
+        dialog {
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            margin: auto;
+            outline: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        dialog::backdrop {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .dialog-header {
+            background-color: var(--primary-color);
+            color: #ffffff;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .dialog-body {
+            padding: 20px;
+            font-size: 14px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+        .dialog-footer {
+            border-top: 1px solid var(--border-color);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: flex-end;
+            background-color: #f8f9fa;
+        }
+        .dialog-close {
+            padding: 6px 16px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* System Settings Panel at the bottom */
+        footer {
+            background-color: #eaeaea;
+            border-top: 1px solid var(--border-color);
+            padding: 16px;
+            margin-top: 40px;
+            font-size: 13px;
+            color: var(--text-muted);
+            text-align: center;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn-settings-toggle {
+            background: none;
+            border: none;
+            color: var(--primary-color);
+            text-decoration: underline;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .settings-panel {
+            display: none;
+            max-width: 800px;
+            width: 100%;
+            margin: 16px auto 0 auto;
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 20px;
+            text-align: left;
+        }
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            cursor: pointer;
+        }
+        .checkbox-container input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Saffron / White / Green Top Accent Line -->
+    <div class="tricolor-header">
+        <div class="tricolor-saffron"></div>
+        <div class="tricolor-white"></div>
+        <div class="tricolor-green"></div>
+    </div>
+
+    <!-- Official Meta Header -->
+    <div class="meta-header">
+        <div>भारत सरकार | GOVERNMENT OF INDIA</div>
+        <div>ग्रामीण विकास मंत्रालय | MINISTRY OF RURAL DEVELOPMENT</div>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="header-container">
+            <div class="logo-section">
+                <h1 id="ui-title">अधिकार | ADHIKAAR</h1>
+                <p id="ui-tagline">जानो अपना अधिकार (Jaano apna adhikaar)</p>
+            </div>
+            <div class="lang-selector-container">
+                <label for="lang-select" id="ui-lang-select-label">भाषा चुनें | Select Language:</label>
+                <select id="lang-select" class="lang-select" onchange="changeLanguage(this.value)">
+                    <option value="hi-IN" selected>हिन्दी (Hindi)</option>
+                    <option value="ta-IN">தமிழ் (Tamil)</option>
+                    <option value="te-IN">తెలుగు (Telugu)</option>
+                    <option value="kn-IN">ಕನ್ನಡ (Kannada)</option>
+                    <option value="mr-IN">மराठी (Marathi)</option>
+                    <option value="bn-IN">বাংলা (Bengali)</option>
+                    <option value="pa-IN">ਪੰਜਾਬੀ (Punjabi)</option>
+                    <option value="ml-IN">മലയാളം (Malayalam)</option>
+                    <option value="gu-IN">ગુજરાતી (Gujarati)</option>
+                    <option value="en-IN">English</option>
+                </select>
+            </div>
+        </div>
+    </header>
+
+    <!-- Demo Banner -->
+    <div id="mode-banner" class="banner banner-demo">
+        <span style="font-size: 16px;">🔍</span>
+        <span id="ui-mode-text">डेमो मोड सक्रिय है। लाइव एआई सुविधाओं के लिए नीचे सेटिंग्स में एपीआई कुंजी दर्ज करें।</span>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-container">
+        
+        <!-- Left Panel: Recording & Form Controls -->
+        <section class="panel">
+            <h2 class="panel-title">
+                <span id="ui-input-title">विवरण इनपुट</span>
+            </h2>
+
+            <!-- Voice Recorder Section -->
+            <div class="mic-container">
+                <button class="btn-mic" id="btn-mic" 
+                        onmousedown="startRecording()" 
+                        onmouseup="stopRecording()" 
+                        onmouseleave="stopRecording()"
+                        ontouchstart="startRecording(event)" 
+                        ontouchend="stopRecording(event)">
+                    <!-- Microphone SVG -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12,2A3,3 0 0,1 15,5V11A3,3 0 0,1 12,14A3,3 0 0,1 9,11V5A3,3 0 0,1 12,2M19,11C19,14.53 16.39,17.44 13,17.93V21H11V17.93C7.61,17.44 5,14.53 5,11H7A5,5 0 0,0 12,16A5,5 0 0,0 17,11H19Z" />
+                    </svg>
+                </button>
+                <div class="mic-status" id="mic-status">दबाकर रखें और अपनी जानकारी बोलें</div>
+            </div>
+
+            <!-- Quick Presets for easy testing -->
+            <div class="presets-container">
+                <div class="presets-title" id="ui-presets-title">परीक्षण के लिए त्वरित उदाहरण (Quick Presets)</div>
+                <div class="presets-grid">
+                    <button class="btn-preset" onclick="loadPreset('farmer')">🌾 किसान (UP, Farmer, 45)</button>
+                    <button class="btn-preset" onclick="loadPreset('female_worker')">👩 मजदूर (Tamil Nadu, Female, 32)</button>
+                    <button class="btn-preset" onclick="loadPreset('girl_child')">👧 बेटी (Karnataka, Girl, 8)</button>
+                    <button class="btn-preset" onclick="loadPreset('student')">📚 छात्र (Bengal, Student, 19)</button>
+                </div>
+            </div>
+
+            <!-- Transcribed Details Box -->
+            <div class="form-group">
+                <label for="transcript-text" id="ui-transcript-title">रिकॉर्ड किया गया विवरण:</label>
+                <textarea id="transcript-text" class="form-control" placeholder="आपकी आवाज का अनुवाद यहां दिखाई देगा..." oninput="handleTranscriptManualChange()"></textarea>
+            </div>
+
+            <!-- Verification form -->
+            <fieldset style="border: none; margin-top: 20px;">
+                <legend id="ui-verify-details" style="font-size: 14px; font-weight: bold; margin-bottom: 12px; color: var(--primary-color);">विवरण सत्यापित करें और संपादित करें</legend>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="form-state" id="ui-state">राज्य</label>
+                        <select id="form-state" class="form-control">
+                            <option value="up">उत्तर प्रदेश (Uttar Pradesh)</option>
+                            <option value="br">बिहार (Bihar)</option>
+                            <option value="tn">तमिलनाडु (Tamil Nadu)</option>
+                            <option value="te">तेलंगाना (Telangana)</option>
+                            <option value="ka">कर्नाटक (Karnataka)</option>
+                            <option value="mh">महाराष्ट्र (Maharashtra)</option>
+                            <option value="wb">पश्चिम बंगाल (West Bengal)</option>
+                            <option value="gj">गुजरात (Gujarat)</option>
+                            <option value="pb">पंजाब (Punjab)</option>
+                            <option value="kl">केरल (Kerala)</option>
+                            <option value="other">अन्य राज्य (Other)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-age" id="ui-age">आयु (वर्ष)</label>
+                        <input type="number" id="form-age" class="form-control" min="1" max="110" value="30">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="ui-gender">लिंग</label>
+                        <div class="radio-group">
+                            <label class="radio-option">
+                                <input type="radio" name="form-gender" value="male" checked>
+                                <span id="ui-gender-male">पुरुष</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="form-gender" value="female">
+                                <span id="ui-gender-female">महिला</span>
+                            </label>
+                            <label class="radio-option">
+                                <input type="radio" name="form-gender" value="other">
+                                <span id="ui-gender-other">अन्य</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="form-income" id="ui-income">मासिक आय (₹)</label>
+                        <input type="number" id="form-income" class="form-control" min="0" value="5000">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="form-occupation" id="ui-occupation">व्यवसाय</label>
+                    <select id="form-occupation" class="form-control">
+                        <option value="worker" selected id="ui-occ-worker">मजदूर/श्रमिक (Worker)</option>
+                        <option value="farmer" id="ui-occ-farmer">किसान (Farmer)</option>
+                        <option value="student" id="ui-occ-student">छात्र (Student)</option>
+                        <option value="other" id="ui-occ-other">अन्य/गृहिणी (Other)</option>
+                    </select>
+                </div>
+
+                <button class="btn" id="btn-find" onclick="runEligibilityCheck()" style="margin-top: 12px;">पात्र सरकारी योजनाएं खोजें</button>
+            </fieldset>
+
+        </section>
+
+        <!-- Right Panel: Eligible Schemes Output -->
+        <section class="panel">
+            <h2 class="panel-title">
+                <span id="ui-schemes-header">आपके लिए पात्र योजनाएं</span>
+            </h2>
+
+            <!-- TTS Playback Panel -->
+            <div class="tts-player" id="tts-player">
+                <span class="tts-player-status" id="tts-player-status">🔊 योजना का विवरण सुनाया जा रहा है...</span>
+                <div class="tts-controls">
+                    <button class="btn-audio-ctrl" onclick="pauseAudio()" id="ui-audio-pause">रोकें</button>
+                    <button class="btn-audio-ctrl" onclick="stopAudio()" id="ui-audio-stop">बंद करें</button>
+                </div>
+            </div>
+
+            <!-- Loader -->
+            <div class="loading-container" id="loading-container">
+                <div class="spinner"></div>
+                <p style="font-weight: bold;" id="ui-loading-text">विवरण का विश्लेषण किया जा रहा है, कृपया प्रतीक्षा करें...</p>
+            </div>
+
+            <!-- Schemes Cards Grid -->
+            <div class="results-container" id="schemes-grid">
+                <!-- Scheme cards will be generated here -->
+                <div style="text-align: center; color: var(--text-muted); padding: 40px 0;" id="ui-no-schemes">
+                    विवरण भरें और पात्रता जांचने के लिए खोज बटन दबाएं।
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Dialog Details Box -->
+    <dialog id="apply-dialog">
+        <div class="dialog-header">
+            <span id="dialog-scheme-name">योजना का नाम</span>
+            <button onclick="closeDialog()" style="background: none; border: none; color: white; font-size: 20px; cursor: pointer;">&times;</button>
+        </div>
+        <div class="dialog-body">
+            <h4 style="margin-bottom: 8px; font-weight: bold;" id="ui-apply-steps">आवेदन करने के चरण:</h4>
+            <p id="dialog-apply-content" style="white-space: pre-wrap;"></p>
+        </div>
+        <div class="dialog-footer">
+            <button class="dialog-close" onclick="closeDialog()" id="ui-dialog-close">बंद करें</button>
+        </div>
+    </dialog>
+
+    <!-- Footer Section -->
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 अधिकार राष्ट्रीय सूचना विज्ञान केंद्र (NIC) प्रोजेक्ट। सहयोग: Sarvam AI एवं Anthropic Claude।</p>
+            <button class="btn-settings-toggle" onclick="toggleSettings()" id="ui-settings-toggle">सिस्टम सेटिंग्स (Settings) ⚙️</button>
+            
+            <!-- Settings Drawer -->
+            <div class="settings-panel" id="settings-panel">
+                <h3 style="margin-bottom: 16px; color: var(--primary-color);" id="ui-settings-title">एपीआई कुंजी सेटिंग्स</h3>
+                
+                <label class="checkbox-container">
+                    <input type="checkbox" id="setting-sim-mode" checked onchange="toggleSimulationMode(this.checked)">
+                    <span id="ui-setting-sim">डेमो / सिमुलेशन मोड सक्षम रखें (बिना एपीआई कुंजी के चलाएं)</span>
+                </label>
+
+                <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 12px;" id="ui-settings-server-info">
+                    <strong>नोट:</strong> लाइव मोड में, यह एप्लिकेशन आपके Vercel सर्वर पर सुरक्षित रूप से कॉन्फ़िगर किए गए <code>SARVAM_API_KEY</code> और <code>ANTHROPIC_API_KEY</code> पर्यावरण चर (Environment Variables) का उपयोग करता है।
+                </p>
+
+                <button class="btn" style="width: auto; padding: 8px 20px; font-size: 14px;" onclick="saveSystemSettings()" id="ui-save-settings">सेटिंग्स सुरक्षित करें</button>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Language UI Translations Map (Supports all 10 languages requested)
+        const locales = {
+            'hi-IN': {
+                title: "अधिकार | ADHIKAAR",
+                tagline: "जानो अपना अधिकार",
+                langSelectLabel: "भाषा चुनें | Select Language:",
+                holdToSpeak: "दबाकर रखें और अपनी जानकारी बोलें",
+                listening: "सुन रहा हूँ... बोलें",
+                processing: "विवरण समझा जा रहा है...",
+                transcriptTitle: "रिकॉर्ड किया गया विवरण:",
+                transcriptPlaceholder: "आपकी आवाज का अनुवाद यहां दिखाई देगा...",
+                verifyDetails: "विवरण सत्यापित करें और संपादित करें",
+                state: "राज्य",
+                age: "आयु (वर्ष)",
+                gender: "लिंग",
+                income: "मासिक आय (₹)",
+                occupation: "व्यवसाय",
+                genderMale: "पुरुष",
+                genderFemale: "महिला",
+                genderOther: "अन्य",
+                occFarmer: "किसान (Farmer)",
+                occWorker: "मजदूर/श्रमिक (Worker)",
+                occStudent: "छात्र (Student)",
+                occOther: "अन्य/गृहिणी (Other)",
+                findSchemes: "योग्य सरकारी योजनाएं खोजें",
+                schemesHeader: "आपके लिए पात्र योजनाएं",
+                noSchemes: "विवरण भरें और पात्रता जांचने के लिए खोज बटन दबाएं।",
+                howToApply: "आवेदन कैसे करें",
+                close: "बंद करें",
+                settingsToggle: "सिस्टम सेटिंग्स (Settings) ⚙️",
+                settingsTitle: "सिस्टम सेटिंग्स (Settings)",
+                settingSim: "डेમો / सिमुलेशन मोड सक्षम रखें (बिना एपीआई कुंजी के चलाएं)",
+                saveSettings: "सेटिंग्स सुरक्षित करें",
+                demoBanner: "🔍 डेमो मोड सक्रिय है। सर्वर-साइड एआई सुविधाओं के लिए नीचे सेटिंग्स खोलें और सिमुलेशन मोड बंद करें।",
+                liveBanner: "🟢 लाइव मोड सक्रिय है (Vercel Serverless Secure Integration)।",
+                applySteps: "आवेदन करने के चरण:",
+                loadingText: "विवरण का विश्लेषण किया जा रहा है, कृपया प्रतीक्षा करें...",
+                audioPause: "रोकें",
+                audioStop: "बंद करें",
+                speakingText: "🔊 योजना का विवरण सुनाया जा रहा है...",
+                presetsTitle: "परीक्षण के लिए त्वरित उदाहरण (Quick Presets)",
+                dialogClose: "बंद करें",
+                settingsServerInfo: "<strong>नोट:</strong> लाइव मोड में, यह एप्लिकेशन आपके Vercel सर्वर पर सुरक्षित रूप से कॉन्फ़िगर किए गए <code>SARVAM_API_KEY</code> और <code>ANTHROPIC_API_KEY</code> का उपयोग करता है।"
+            },
+            'ta-IN': {
+                title: "அதிகார் | ADHIKAAR",
+                tagline: "உங்கள் உரிமையை அறிந்து கொள்ளுங்கள்",
+                langSelectLabel: "மொழியைத் தேர்ந்தெடுக்கவும்:",
+                holdToSpeak: "பேச அழுத்திப் பிடிக்கவும்",
+                listening: "கேட்கிறது... இப்போது பேசுங்கள்",
+                processing: "குரல் செயலாக்கப்படுகிறது...",
+                transcriptTitle: "பதிவுசெய்யப்பட்ட விவரங்கள்:",
+                transcriptPlaceholder: "உங்கள் குரல் விவரங்கள் இங்கே தோன்றும்...",
+                verifyDetails: "விவரங்களை சரிபார்த்து திருத்தவும்",
+                state: "மாநிலம்",
+                age: "வயது (ஆண்டுகள்)",
+                gender: "பாலினம்",
+                income: "மாதாந்திர வருமானம் (₹)",
+                occupation: "தொழில்",
+                genderMale: "ஆண்",
+                genderFemale: "பெண்",
+                genderOther: "இதர",
+                occFarmer: "விவசாயி (Farmer)",
+                occWorker: "தொழிலாளி (Worker)",
+                occStudent: "மாணவர் (Student)",
+                occOther: "இதர/இல்லத்தரசி (Other)",
+                findSchemes: "தகுதியான திட்டங்களைக் கண்டறியவும்",
+                schemesHeader: "உங்களுக்கான தகுதியான திட்டங்கள்",
+                noSchemes: "விவரங்களை பூர்த்தி செய்து திட்டங்களை தேடவும்.",
+                howToApply: "விண்ணப்பிப்பது எப்படி",
+                close: "மூடு",
+                settingsToggle: "அமைப்பு அமைப்புகள் (Settings) ⚙️",
+                settingsTitle: "கணினி அமைப்புகள்",
+                settingSim: "டெமோ / உருவகப்படுத்துதல் பயன்முறையை இயக்கவும்",
+                saveSettings: "அமைப்புகளைச் சேமிக்கவும்",
+                demoBanner: "🔍 டெமோ பயன்முறை செயலில் உள்ளது. சர்வர்-சைடு ஏஐ வசதிகளைப் பெற அமைப்புகளை மாற்றவும்.",
+                liveBanner: "🟢 லைவ் பயன்முறை செயலில் உள்ளது (Vercel Serverless Secure Integration).",
+                applySteps: "விண்ணப்பிக்கும் படிகள்:",
+                loadingText: "விவரங்கள் பகுப்பாய்வு செய்யப்படுகின்றன, தயவுசெய்து காத்திருக்கவும்...",
+                audioPause: "நிறுத்து",
+                audioStop: "மூடு",
+                speakingText: "🔊 திட்ட விவரங்கள் வாசிக்கப்படுகின்றன...",
+                presetsTitle: "விரைவான சோதனைக்கான முன்னமைவுகள் (Presets)",
+                dialogClose: "மூடு",
+                settingsServerInfo: "<strong>குறிப்பு:</strong> லைவ் பயன்முறையில், இந்த ஆப்ஸ் உங்கள் வெர்செல் சர்வரில் உள்ள <code>SARVAM_API_KEY</code> மற்றும் <code>ANTHROPIC_API_KEY</code> ஐ பாதுகாப்பாக பயன்படுத்துகிறது."
+            },
+            'te-IN': {
+                title: "అధికార్ | ADHIKAAR",
+                tagline: "మీ హక్కును తెలుసుకోండి",
+                langSelectLabel: "భాషను ఎంచుకోండి:",
+                holdToSpeak: "మాట్లాడటానికి నొక్కి పట్టుకోండి",
+                listening: "వింటున్నాము... ఇప్పుడు మాట్లాడండి",
+                processing: "ధ్వని విశ్లేషించబడుతోంది...",
+                transcriptTitle: "నమోదైన వివరాలు:",
+                transcriptPlaceholder: "మీ మాటల అనువాదం ఇక్కడ కనిపిస్తుంది...",
+                verifyDetails: "వివరాలను సరిచూసుకోండి మరియు సవరించండి",
+                state: "రాష్ట్రం",
+                age: "వయస్సు (సంవత్సరాలు)",
+                gender: "లింగం",
+                income: "నెలవారీ ఆదాయం (₹)",
+                occupation: "వృత్తి",
+                genderMale: "పురుషుడు",
+                genderFemale: "స్త్రీ",
+                genderOther: "ఇతర",
+                occFarmer: "రైతు (Farmer)",
+                occWorker: "కార్మికుడు (Worker)",
+                occStudent: "విద్యార్థి (Student)",
+                occOther: "ఇతర/గృహిణి (Other)",
+                findSchemes: "అర్హత గల పథకాలను కనుగొనండి",
+                schemesHeader: "మీకు అర్హత ఉన్న పథకాలు",
+                noSchemes: "వివరాలను నమోదు చేసి పథకాల కోసం వెతకండి.",
+                howToApply: "అప్లై చేయడం ఎలా",
+                close: "మూసివేయి",
+                settingsToggle: "సిస్టమ్ సెట్టింగులు (Settings) ⚙️",
+                settingsTitle: "సిస్టమ్ సెట్టింగులు",
+                settingSim: "డెమో / సిమ్యులేషన్ మోడ్ యాక్టివ్ చేయండి",
+                saveSettings: "సెట్టింగులను సేవ్ చేయి",
+                demoBanner: "🔍 డెమో మోడ్ సక్రియంగా ఉంది. లైవ్ AI సేవలకు సెట్టింగులను మార్చండి.",
+                liveBanner: "🟢 లైవ్ మోడ్ సక్రియంగా ఉంది (Vercel Serverless Secure Integration).",
+                applySteps: "దరఖాస్తు విధానం:",
+                loadingText: "వివరాలు విశ్లేషించబడుతున్నాయి, దయచేసి వేచి ఉండండి...",
+                audioPause: "ఆపు",
+                audioStop: "మూసివేయి",
+                speakingText: "🔊 పథకం వివరాలు వినిపించబడుతున్నాయి...",
+                presetsTitle: "పరీక్షించడానికి త్వరిత ఉదాహరణలు (Presets)",
+                dialogClose: "మూసివేయి",
+                settingsServerInfo: "<strong>గమనిక:</strong> లైవ్ మోడ్ లో, ఈ యాప్ మీ Vercel సర్వరులో ఉన్న <code>SARVAM_API_KEY</code> మరియు <code>ANTHROPIC_API_KEY</code> లని వాడుకుంటుంది."
+            },
+            'kn-IN': {
+                title: "ಅಧಿಕಾರ್ | ADHIKAAR",
+                tagline: "ನಿಮ್ಮ ಹಕ್ಕನ್ನು ತಿಳಿಯಿರಿ",
+                langSelectLabel: "ಭಾಷೆಯನ್ನು ಆರಿಸಿ:",
+                holdToSpeak: "ಮಾತನಾಡಲು ಒತ್ತಿ ಹಿಡಿಯಿರಿ",
+                listening: "ಕೇಳಿಸಲಾಗುತ್ತಿದೆ... ಈಗ ಮಾತನಾಡಿ",
+                processing: "ಧ್ವನಿಯನ್ನು ಸಂಸ್ಕರಿಸಲಾಗುತ್ತಿದೆ...",
+                transcriptTitle: "ದಾಖಲಾದ ವಿವರಗಳು:",
+                transcriptPlaceholder: "ನಿಮ್ಮ ಮಾತಿನ ಲಿಪ್ಯಂತರ ಇಲ್ಲಿ ಕಾಣಿಸುತ್ತದೆ...",
+                verifyDetails: "ವಿವರಗಳನ್ನು ಪರಿಶೀಲಿಸಿ ಮತ್ತು ಸಂಪಾದಿಸಿ",
+                state: "ರಾಜ್ಯ",
+                age: "ವಯಸ್ಸು (ವರ್ಷಗಳು)",
+                gender: "ಲಿಂಗ",
+                income: "ಮಾಸಿಕ ಆದಾಯ (₹)",
+                occupation: "ವೃತ್ತಿ",
+                genderMale: "ಪುರುಷ",
+                genderFemale: "ಮಹಿಳೆ",
+                genderOther: "ಇತರ",
+                occFarmer: "ರೈತ (Farmer)",
+                occWorker: "ಕಾರ್ಮಿಕ (Worker)",
+                occStudent: "ವಿದ್ಯಾರ್ಥಿ (Student)",
+                occOther: "ಇತರ/ಗೃಹಿಣಿ (Other)",
+                findSchemes: "ಅರ್ಹ ಸರ್ಕಾರಿ ಯೋಜನೆಗಳನ್ನು ಹುಡುಕಿ",
+                schemesHeader: "ನಿಮಗಾಗಿ ಅರ್ಹ ಯೋಜನೆಗಳು",
+                noSchemes: "ವಿವರಗಳನ್ನು ಭರ್ತಿ ಮಾಡಿ ಮತ್ತು ಹುಡುಕು ಬಟನ್ ಒತ್ತಿರಿ.",
+                howToApply: "ಅನ್ವಯಿಸುವುದು ಹೇಗೆ",
+                close: "ಮುಚ್ಚಿ",
+                settingsToggle: "ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳು (Settings) ⚙️",
+                settingsTitle: "ಸಿಸ್ಟಮ್ ಸೆಟ್ಟಿಂಗ್ಗಳು",
+                settingSim: "ಡೆಮೊ / ಸಿಮ್ಯುಲೇಶನ್ ಮೋಡ್ ಸಕ್ರಿಯಗೊಳಿಸಿ",
+                saveSettings: "ಸೆಟ್ಟಿಂಗ್ ಉಳಿಸಿ",
+                demoBanner: "🔍 ಡೆಮೊ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ. ಲೈವ್ ಎಐ ಸೇವೆಗಾಗಿ ಸೆಟ್ಟಿಂಗ್ಗಳನ್ನು ಬದಲಾಯಿಸಿ.",
+                liveBanner: "🟢 ಲೈವ್ ಮೋಡ್ ಸಕ್ರಿಯವಾಗಿದೆ (Vercel Serverless Secure Integration).",
+                applySteps: "ಅನ್ವಯಿಸುವ ಹಂತಗಳು:",
+                loadingText: "ವಿವರಗಳನ್ನು ವಿಶ್ಲೇಷಿಸಲಾಗುತ್ತಿದೆ, ದಯವಿಟ್ಟು ಕಾಯಿರಿ...",
+                audioPause: "ನಿಲ್ಲಿಸಿ",
+                audioStop: "ಮುಚ್ಚಿ",
+                speakingText: "🔊 ಯೋಜನೆಯ ವಿವರಗಳನ್ನು ಓದಲಾಗುತ್ತಿದೆ...",
+                presetsTitle: "ತ್ವರಿತ ಪರೀಕ್ಷೆಗಾಗಿ ಉದಾಹರಣೆಗಳು (Presets)",
+                dialogClose: "ಮುಚ್ಚಿ",
+                settingsServerInfo: "<strong>ಸೂಚನೆ:</strong> ಲೈವ್ ಮೋಡ್ ನಲ್ಲಿ, ಈ ಅಪ್ಲಿಕೇಶನ್ ನಿಮ್ಮ Vercel ಸರ್ವರ್ ನಲ್ಲಿರುವ <code>SARVAM_API_KEY</code> ಮತ್ತು <code>ANTHROPIC_API_KEY</code> ಅನ್ನು ಬಳಸುತ್ತದೆ."
+            },
+            'mr-IN': {
+                title: "अधिकार | ADHIKAAR",
+                tagline: "तुमचा अधिकार जाणून घ्या",
+                langSelectLabel: "भाषा निवडा:",
+                holdToSpeak: "बोलण्यासाठी दाबून ठेवा",
+                listening: "ऐकत आहे... आता बोला",
+                processing: "आवाज समजून घेतला जात आहे...",
+                transcriptTitle: "नोंदवलेला तपशील:",
+                transcriptPlaceholder: "तुमच्या आवाजाचे भाषांतर येथे दिसेल...",
+                verifyDetails: "माहिती तपासा आणि संपादित करा",
+                state: "राज्य",
+                age: "वय (वर्षे)",
+                gender: "लिंग",
+                income: "मासिक उत्पन्न (₹)",
+                occupation: "व्यवसाय",
+                genderMale: "पुरुष",
+                genderFemale: "महिला",
+                genderOther: "इतर",
+                occFarmer: "शेतकरी (Farmer)",
+                occWorker: "मजूर/कामगार (Worker)",
+                occStudent: "विद्यार्थी (Student)",
+                occOther: "इतर/गृहिणी (Other)",
+                findSchemes: "पात्र सरकारी योजना शोधा",
+                schemesHeader: "तुमच्यासाठी पात्र योजना",
+                noSchemes: "तपशील भरा आणि पात्रता तपासण्यासाठी शोधा बटण दाबा.",
+                howToApply: "कसे अर्ज करावे",
+                close: "बंद करा",
+                settingsToggle: "सिस्टम सेटिंग्स (Settings) ⚙️",
+                settingsTitle: "सिस्टम सेटिंग्स",
+                settingSim: "डेमो / सिम्युलेशन मोड सक्षम ठेवा",
+                saveSettings: "सेटिंग्ज जतन करा",
+                demoBanner: "🔍 डेमो मोड सुरू आहे. लाईव्ह एआय सेवा वापरण्यासाठी सिमुलेशन बंद करा.",
+                liveBanner: "🟢 लाईव्ह मोड सुरू आहे (Vercel Serverless Secure Integration).",
+                applySteps: "अर्ज करण्याचे टप्पे:",
+                loadingText: "तपशीलांचे विश्लेषण केले जात आहे, कृपया प्रतीक्षा करा...",
+                audioPause: "थांबवा",
+                audioStop: "बंद करा",
+                speakingText: "🔊 योजनेची माहिती वाचून दाखवली जात आहे...",
+                presetsTitle: "चाचणीसाठी झटपट पर्याय (Presets)",
+                dialogClose: "बंद करा",
+                settingsServerInfo: "<strong>टीप:</strong> लाईव्ह मोडमध्ये, हा ॲप तुमच्या Vercel सर्व्हरवर सुरक्षितपणे ठेवलेले <code>SARVAM_API_KEY</code> आणि <code>ANTHROPIC_API_KEY</code> वापरतो."
+            },
+            'bn-IN': {
+                title: "অধিকার | ADHIKAAR",
+                tagline: "আপনার অধিকার জানুন",
+                langSelectLabel: "ভাষা নির্বাচন করুন:",
+                holdToSpeak: "কথা বলার জন্য চেপে রাখুন",
+                listening: "শুনছি... এখন কথা বলুন",
+                processing: "কণ্ঠস্বর বিশ্লেষণ করা হচ্ছে...",
+                transcriptTitle: "রেকর্ড করা বিবরণ:",
+                transcriptPlaceholder: "আপনার কথার অনুলিপি এখানে প্রদর্শিত হবে...",
+                verifyDetails: "বিবরণ যাচাই ও সম্পাদন করুন",
+                state: "রাজ্য",
+                age: "বয়স (বছর)",
+                gender: "লিঙ্গ",
+                income: "মাসিক আয় (₹)",
+                occupation: "পেশা",
+                genderMale: "পুরুষ",
+                genderFemale: "মহিলা",
+                genderOther: "অন্যান্য",
+                occFarmer: "কৃষক (Farmer)",
+                occWorker: "শ্রমিক (Worker)",
+                occStudent: "ছাত্র (Student)",
+                occOther: "অন্যান্য/গৃহিণী (Other)",
+                findSchemes: "যোগ্য সরকারি স্কিম খুঁজুন",
+                schemesHeader: "আপনার জন্য যোগ্য স্কিমসমূহ",
+                noSchemes: "বিবরণ পূরণ করুন এবং স্কিমগুলি খুঁজতে অনুসন্ধান বোতাম টিপুন।",
+                howToApply: "কিভাবে আবেদন করবেন",
+                close: "বন্ধ করুন",
+                settingsToggle: "সিস্টেম সেটিংস (Settings) ⚙️",
+                settingsTitle: "সিস্টেম সেটিংস",
+                settingSim: "ডেমো / সিমুলেশন মোড সক্রিয় রাখুন",
+                saveSettings: "সেটিংস সংরক্ষণ করুন",
+                demoBanner: "🔍 ডেমো মোড সক্রিয় রয়েছে। লাইভ এআই সুবিধার জন্য সেটিংসে সিমুলেশন বন্ধ করুন।",
+                liveBanner: "🟢 লাইভ মোড সক্রিয় রয়েছে (Vercel Serverless Secure Integration)।",
+                applySteps: "আবেদন করার ধাপসমূহ:",
+                loadingText: "বিবরণ বিশ্লেষণ করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...",
+                audioPause: "থামান",
+                audioStop: "বন্ধ করুন",
+                speakingText: "🔊 স্কিমের বিবরণ শোনানো হচ্ছে...",
+                presetsTitle: "পরীক্ষার জন্য দ্রুত উদাহরণ (Presets)",
+                dialogClose: "বন্ধ করুন",
+                settingsServerInfo: "<strong>দ্রষ্টব্য:</strong> লাইভ মোডে এই অ্যাপ্লিকেশনটি আপনার Vercel সার্ভারে সুরক্ষিতভাবে রাখা <code>SARVAM_API_KEY</code> এবং <code>ANTHROPIC_API_KEY</code> ব্যবহার করে।"
+            },
+            'pa-IN': {
+                title: "ਅਧਿਕਾਰ | ADHIKAAR",
+                tagline: "ਆਪਣਾ ਅਧਿਕਾਰ ਜਾਣੋ",
+                langSelectLabel: "ਭਾਸ਼ਾ ਚੁਣੋ:",
+                holdToSpeak: "ਬੋਲਣ ਲਈ ਦਬਾ ਕੇ ਰੱਖੋ",
+                listening: "ਸੁਣ ਰਿਹਾ ਹਾਂ... ਹੁਣ ਬੋਲੋ",
+                processing: "ਆਵਾਜ਼ ਸਮਝੀ ਜਾ ਰਹੀ ਹੈ...",
+                transcriptTitle: "ਰਿਕਾਰਡ ਕੀਤਾ ਵੇਰਵਾ:",
+                transcriptPlaceholder: "ਤੁਹਾਡੀ ਆਵਾਜ਼ ਦਾ ਅਨੁਵਾਦ ਇੱਥੇ ਦਿਖਾਈ ਦੇਵੇਗਾ...",
+                verifyDetails: "ਵੇਰਵਿਆਂ ਦੀ ਜਾਂਚ ਕਰੋ ਅਤੇ ਸੋਧੋ",
+                state: "ਰਾਜ",
+                age: "ਉਮਰ (ਸਾਲ)",
+                gender: "ਲਿੰਗ",
+                income: "ਮਹੀਨਾਵਾਰ ਆਮਦਨ (₹)",
+                occupation: "ਕਾਰੋਬਾਰ",
+                genderMale: "ਮਰਦ",
+                genderFemale: "ਔਰਤ",
+                genderOther: "ਹੋਰ",
+                occFarmer: "ਕਿਸਾਨ (Farmer)",
+                occWorker: "ਮਜ਼ਦੂਰ (Worker)",
+                occStudent: "ਵਿਦਿਆਰਥੀ (Student)",
+                occOther: "ਹੋਰ/ਘਰੇਲੂ (Other)",
+                findSchemes: "ਯੋਗ ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ ਲੱਭੋ",
+                schemesHeader: "ਤੁਹਾਡੇ ਲਈ ਯੋਗ ਯੋਜਨਾਵਾਂ",
+                noSchemes: "ਵੇਰਵੇ ਭਰੋ ਅਤੇ ਯੋਜਨਾਵਾਂ ਦੀ ਖੋਜ ਕਰਨ ਲਈ ਬਟਨ ਦਬਾਓ।",
+                howToApply: "ਕਿਵੇਂ ਅਪਲਾਈ ਕਰਨਾ ਹੈ",
+                close: "ਬੰਦ ਕਰੋ",
+                settingsToggle: "ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ (Settings) ⚙️",
+                settingsTitle: "ਸਿਸਟਮ ਸੈਟਿੰਗਾਂ",
+                settingSim: "ਡੇਮੋ / ਸਿਮੂਲੇਸ਼ਨ ਮੋਡ ਚਾਲੂ ਰੱਖੋ",
+                saveSettings: "ਸੈਟਿੰਗਾਂ ਸੁਰੱਖਿਅਤ ਕਰੋ",
+                demoBanner: "🔍 ਡੈਮੋ ਮੋਡ ਸਰਗਰਮ ਹੈ। ਲਾਈਵ AI ਫੀਚਰਾਂ ਲਈ ਸੈਟਿੰਗਾਂ ਬਦਲੋ।",
+                liveBanner: "🟢 ਲਾਈਵ ਮੋਡ ਸਰਗਰਮ ਹੈ (Vercel Serverless Secure Integration)।",
+                applySteps: "ਅਪਲਾਈ ਕਰਨ ਦੇ ਪੜਾਅ:",
+                loadingText: "ਵੇਰਵਿਆਂ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ, ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ...",
+                audioPause: "ਰੋਕੋ",
+                audioStop: "ਬੰਦ ਕਰੋ",
+                speakingText: "🔊 ਯੋਜਨਾ ਦਾ ਵੇਰਵਾ ਸੁਣਾਇਆ ਜਾ ਰਿਹਾ ਹੈ...",
+                presetsTitle: "ਟੈਸਟਿੰਗ ਲਈ ਤੁਰੰਤ ਉਦਾਹरणਾਂ (Presets)",
+                dialogClose: "ਬੰਦ ਕਰੋ",
+                settingsServerInfo: "<strong>ਨੋਟ:</strong> ਲਾਈਵ ਮੋਡ ਵਿੱਚ, ਇਹ ਐਪਲੀਕੇਸ਼ਨ ਤੁਹਾਡੇ Vercel ਸਰਵਰ 'ਤੇ ਸੁਰੱਖਿਅਤ ਰੂਪ ਵਿੱਚ ਰੱਖੇ ਗਏ <code>SARVAM_API_KEY</code> ਅਤੇ <code>ANTHROPIC_API_KEY</code> ਦੀ ਵਰਤੋਂ ਕਰਦੀ ਹੈ।"
+            },
+            'ml-IN': {
+                title: "അധികാർ | ADHIKAAR",
+                tagline: "നിങ്ങളുടെ അവകാശം അറിയുക",
+                langSelectLabel: "ഭാഷ തിരഞ്ഞെടുക്കുക:",
+                holdToSpeak: "സംസാരിക്കാൻ അമർത്തിപ്പിടിക്കുക",
+                listening: "ശ്രദ്ധിക്കുന്നു... ഇപ്പോൾ സംസാരിക്കാം",
+                processing: "ശബ്ദം വിശകലനം ചെയ്യുന്നു...",
+                transcriptTitle: "രേഖപ്പെടുത്തിയ വിവരങ്ങൾ:",
+                transcriptPlaceholder: "നിങ്ങൾ സംസാരിച്ചത് ഇവിടെ എഴുതി വരും...",
+                verifyDetails: "വിവരങ്ങൾ പരിശോധിക്കുകയും തിരുത്തുകയും ചെയ്യുക",
+                state: "സംസ്ഥാനം",
+                age: "പ്രായം (വർഷം)",
+                gender: "ലിംഗഭേദം",
+                income: "പ്രതിമാസ വരുമാനം (₹)",
+                occupation: "തൊഴിൽ",
+                genderMale: "പുരുഷൻ",
+                genderFemale: "സ്ത്രീ",
+                genderOther: "മറ്റുള്ളവ",
+                occFarmer: "കർഷകൻ (Farmer)",
+                occWorker: "തൊഴിലാളി (Worker)",
+                occStudent: "വിദ്യാർത്ഥി (Student)",
+                occOther: "മറ്റുള്ളവ/ഹൗസ്‌വൈഫ് (Other)",
+                findSchemes: "അർഹമായ പദ്ധതികൾ കണ്ടെത്തുക",
+                schemesHeader: "നിങ്ങൾക്കായുള്ള പദ്ധതികൾ",
+                noSchemes: "വിവരങ്ങൾ നൽകിയ ശേഷം പദ്ധതികൾക്കായി തിരയുക.",
+                howToApply: "അപേക്ഷിക്കേണ്ട വിധം",
+                close: "അടയ്ക്കുക",
+                settingsToggle: "സിസ്റ്റം ക്രമീകരണങ്ങൾ (Settings) ⚙️",
+                settingsTitle: "സിസ്റ്റം ക്രമീകരണങ്ങൾ",
+                settingSim: "ഡെമോ / സിമുലേഷൻ മോഡ് സജീവമാക്കുക",
+                saveSettings: "ക്രമീകരണങ്ങൾ സംരക്ഷിക്കുക",
+                demoBanner: "🔍 ഡെമോ മോഡ് സജീവമാണ്. ലൈവ് എഐ സേവനങ്ങൾക്ക് ക്രമീകരണങ്ങൾ മാറ്റുക.",
+                liveBanner: "🟢 ലൈവ് മോഡ് സജീവമാണ് (Vercel Serverless Secure Integration).",
+                applySteps: "അപേക്ഷിക്കേണ്ട ഘട്ടങ്ങൾ:",
+                loadingText: "വിവരങ്ങൾ വിശകലനം ചെയ്യുന്നു, ദയവായി കാത്തിരിക്കുക...",
+                audioPause: "നിർത്തുക",
+                audioStop: "അടയ്ക്കുക",
+                speakingText: "🔊 പദ്ധതി വിവരങ്ങൾ വായിച്ചു കേൾപ്പിക്കുന്നു...",
+                presetsTitle: "പരിശോധിക്കുന്നതിനായുള്ള ഉദാഹരണങ്ങൾ (Presets)",
+                dialogClose: "അടയ്ക്കുക",
+                settingsServerInfo: "<strong>ശ്രദ്ധിക്കുക:</strong> ലൈവ് മോഡിൽ, ഈ ആപ്പ് നിങ്ങളുടെ Vercel സെർവറിലുള്ള <code>SARVAM_API_KEY</code>, <code>ANTHROPIC_API_KEY</code> എന്നിവ സുരക്ഷിതമായി ഉപയോഗിക്കുന്നു."
+            },
+            'gu-IN': {
+                title: "અધિકાર | ADHIKAAR",
+                tagline: "તમારો અધિકાર જાણો",
+                langSelectLabel: "ભાષા પસંદ કરો:",
+                holdToSpeak: "બોલવા માટે દબાવી રાખો",
+                listening: "સાંભળી રહ્યા છીએ... હવે બોલો",
+                processing: "અવાજ સમજવામાં આવી રહ્યો છે...",
+                transcriptTitle: "નોંધાયેલી માહિતી:",
+                transcriptPlaceholder: "તમારા અવાજનું ભાષાંતર અહીં દેખાશે...",
+                verifyDetails: "માહિતી ચકાસો અને સુધારો",
+                state: "રાજ્ય",
+                age: "અંમર (વર્ષ)",
+                gender: "લિંગ",
+                income: "માસિક આવક (₹)",
+                occupation: "વ્યવસાય",
+                genderMale: "પુરુષ",
+                genderFemale: "મહિલા",
+                genderOther: "અન્ય",
+                occFarmer: "ખેડૂત (Farmer)",
+                occWorker: "મજૂર/શ્રમિક (Worker)",
+                occStudent: "વિદ્યાર્થી (Student)",
+                occOther: "અન્ય/ગૃહિણી (Other)",
+                findSchemes: "યોગ્ય સરકારી યોજનાઓ શોધો",
+                schemesHeader: "તમારા માટે યોગ્ય યોજનાઓ",
+                noSchemes: "માહિતી ભરો અને યોજનાઓ શોધવા માટે બટન દબાવો.",
+                howToApply: "કેવી રીતે અરજી કરવી",
+                close: "બંધ કરો",
+                settingsToggle: "સિસ્ટમ સેટિંગ્સ (Settings) ⚙️",
+                settingsTitle: "સિસ્ટમ સેટિંગ્સ",
+                settingSim: "ડેમો / સિમ્યુલેશન મોડ સક્રિય રાખો",
+                saveSettings: "સેટિંગ્સ સાચવો",
+                demoBanner: "🔍 ડેમો મોડ કાર્યરત છે. લાઈવ એઆઈ સુવિધાઓ ચાલુ કરવા સેટિંગ્સ બદલો.",
+                liveBanner: "🟢 લાઈવ મોડ કાર્યરત છે (Vercel Serverless Secure Integration).",
+                applySteps: "અરજી કરવાના પગલાં:",
+                loadingText: "માહિતીનું વિશ્લેષણ થઈ રહ્યું છે, કૃપા કરીને પ્રતીક્ષા કરો...",
+                audioPause: "અટકાવો",
+                audioStop: "બંધ કરો",
+                speakingText: "🔊 યોજનાની માહિતી સંભળાવવામાં આવી રહી છે...",
+                presetsTitle: "ઝડપી ચકાસણી માટે ઉદાહરણો (Presets)",
+                dialogClose: "બંધ કરો",
+                settingsServerInfo: "<strong>નોંધ:</strong> લાઈવ મોડમાં, આ એપ્લિકેશન તમારા Vercel સર્વર પરના સુરક્ષિત <code>SARVAM_API_KEY</code> અને <code>ANTHROPIC_API_KEY</code> નો ઉપયોગ કરે છે."
+            },
+            'en-IN': {
+                title: "Adhikaar | ADHIKAAR",
+                tagline: "Jaano apna adhikaar",
+                langSelectLabel: "Select Language:",
+                holdToSpeak: "Hold to Speak",
+                listening: "Listening... Speak now",
+                processing: "Processing speech...",
+                transcriptTitle: "Recorded Details:",
+                transcriptPlaceholder: "Your transcribed voice details will appear here...",
+                verifyDetails: "Verify and Edit Details",
+                state: "State",
+                age: "Age (Years)",
+                gender: "Gender",
+                income: "Monthly Income (₹)",
+                occupation: "Occupation",
+                genderMale: "Male",
+                genderFemale: "Female",
+                genderOther: "Other",
+                occFarmer: "Farmer",
+                occWorker: "Worker",
+                occStudent: "Student",
+                occOther: "Other/Homemaker",
+                findSchemes: "Find Eligible Schemes",
+                schemesHeader: "Eligible Schemes For You",
+                noSchemes: "Fill details and click the search button to verify eligibility.",
+                howToApply: "How to Apply",
+                close: "Close",
+                settingsToggle: "System Settings ⚙️",
+                settingsTitle: "System Settings",
+                settingSim: "Keep Demo / Simulation Mode enabled (run without API keys)",
+                saveSettings: "Save Settings",
+                demoBanner: "🔍 Demo Mode Active. Turn off Simulation Mode in Settings below for server-side live AI.",
+                liveBanner: "🟢 Live Mode Active (Vercel Serverless Secure Integration).",
+                applySteps: "Steps to Apply:",
+                loadingText: "Analyzing details, please wait...",
+                audioPause: "Pause",
+                audioStop: "Stop",
+                speakingText: "🔊 Speaking scheme details...",
+                presetsTitle: "Quick Presets for Testing",
+                dialogClose: "Close",
+                settingsServerInfo: "<strong>Note:</strong> In live mode, this application securely queries API endpoints configured with <code>SARVAM_API_KEY</code> and <code>ANTHROPIC_API_KEY</code> environment variables hosted on your Vercel server."
+            }
+        };
+
+        // Current system state variables
+        let appSettings = {
+            simMode: true
+        };
+
+        let currentLang = 'hi-IN';
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let recognition = null; // Browser speech recognition fallback
+        let currentAudio = null; // Active audio element for TTS playback
+
+        // Page load initialization
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSettingsFromStorage();
+            initializeSpeechRecognition();
+            updateUIStrings();
+        });
+
+        // Load settings from localStorage
+        function loadSettingsFromStorage() {
+            const stored = localStorage.getItem('adhikaar_serverless_settings');
+            if (stored) {
+                try {
+                    appSettings = JSON.parse(stored);
+                    document.getElementById('setting-sim-mode').checked = appSettings.simMode;
+                } catch (e) {
+                    console.error("Error loading settings from localStorage", e);
+                }
+            } else {
+                appSettings.simMode = true;
+            }
+            toggleSimulationMode(appSettings.simMode);
+        }
+
+        // Save settings to localStorage
+        function saveSystemSettings() {
+            appSettings.simMode = document.getElementById('setting-sim-mode').checked;
+            localStorage.setItem('adhikaar_serverless_settings', JSON.stringify(appSettings));
+            
+            // Show saved status
+            const saveBtn = document.getElementById('ui-save-settings');
+            const originalText = saveBtn.innerText;
+            const currentStrings = locales[currentLang];
+            saveBtn.innerText = currentStrings.settingsSaved || "Saved!";
+            saveBtn.style.backgroundColor = 'var(--success-color)';
+            saveBtn.style.borderColor = 'var(--success-color)';
+            
+            setTimeout(() => {
+                saveBtn.innerText = originalText;
+                saveBtn.style.backgroundColor = 'var(--primary-color)';
+                saveBtn.style.borderColor = 'var(--primary-color)';
+            }, 1500);
+
+            // Update banner
+            updateBanner();
+        }
+
+        // Update mode banner at top
+        function updateBanner() {
+            const banner = document.getElementById('mode-banner');
+            const bannerText = document.getElementById('ui-mode-text');
+            const strings = locales[currentLang];
+
+            if (appSettings.simMode) {
+                banner.className = "banner banner-demo";
+                bannerText.innerText = strings.demoBanner;
+            } else {
+                banner.className = "banner banner-live";
+                bannerText.innerText = strings.liveBanner;
+            }
+        }
+
+        // Toggle Simulation Mode checkbox
+        function toggleSimulationMode(isSim) {
+            appSettings.simMode = isSim;
+            updateBanner();
+        }
+
+        // Toggle visibility of system settings drawer
+        function toggleSettings() {
+            const panel = document.getElementById('settings-panel');
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+            } else {
+                panel.style.display = 'block';
+                panel.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // Initialize Web Speech API for simulation mode
+        function initializeSpeechRecognition() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (SpeechRecognition) {
+                recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+                
+                recognition.onstart = () => {
+                    updateMicStatus('listening');
+                };
+
+                recognition.onresult = (event) => {
+                    const speechToText = event.results[0][0].transcript;
+                    document.getElementById('transcript-text').value = speechToText;
+                    updateMicStatus('idle');
+                    handleTranscriptManualChange(); // Parse and fill forms automatically
+                };
+
+                recognition.onerror = (event) => {
+                    console.error("Speech recognition error:", event.error);
+                    updateMicStatus('idle');
+                };
+
+                recognition.onend = () => {
+                    updateMicStatus('idle');
+                };
+            }
+        }
+
+        // Change App language
+        function changeLanguage(langCode) {
+            currentLang = langCode;
+            document.documentElement.lang = langCode.split('-')[0];
+            updateUIStrings();
+            updateBanner();
+            
+            // Re-apply language to speech recognition if running
+            if (recognition) {
+                recognition.lang = langCode;
+            }
+        }
+
+        // Update all UI labels according to selected language
+        function updateUIStrings() {
+            const strings = locales[currentLang] || locales['en-IN'];
+            
+            // Text updates
+            document.getElementById('ui-title').innerText = strings.title;
+            document.getElementById('ui-tagline').innerText = strings.tagline;
+            document.getElementById('ui-lang-select-label').innerText = strings.langSelectLabel;
+            document.getElementById('ui-input-title').innerText = strings.holdToSpeak;
+            document.getElementById('ui-transcript-title').innerText = strings.transcriptTitle;
+            document.getElementById('transcript-text').placeholder = strings.transcriptPlaceholder;
+            document.getElementById('ui-verify-details').innerText = strings.verifyDetails;
+            document.getElementById('ui-state').innerText = strings.state;
+            document.getElementById('ui-age').innerText = strings.age;
+            document.getElementById('ui-gender').innerText = strings.gender;
+            document.getElementById('ui-income').innerText = strings.income;
+            document.getElementById('ui-occupation').innerText = strings.occupation;
+            document.getElementById('ui-gender-male').innerText = strings.genderMale;
+            document.getElementById('ui-gender-female').innerText = strings.genderFemale;
+            document.getElementById('ui-gender-other').innerText = strings.genderOther;
+            
+            document.getElementById('ui-occ-worker').innerText = strings.occWorker;
+            document.getElementById('ui-occ-farmer').innerText = strings.occFarmer;
+            document.getElementById('ui-occ-student').innerText = strings.occStudent;
+            document.getElementById('ui-occ-other').innerText = strings.occOther;
+            
+            document.getElementById('btn-find').innerText = strings.findSchemes;
+            document.getElementById('ui-schemes-header').innerText = strings.schemesHeader;
+            
+            // Empty state scheme text
+            const noSchemesDiv = document.getElementById('ui-no-schemes');
+            if (noSchemesDiv) {
+                noSchemesDiv.innerText = strings.noSchemes;
+            }
+            
+            // Settings Panel strings
+            document.getElementById('ui-settings-toggle').innerText = strings.settingsToggle;
+            document.getElementById('ui-settings-title').innerText = strings.settingsTitle;
+            document.getElementById('ui-setting-sim').innerText = strings.settingSim;
+            document.getElementById('ui-save-settings').innerText = strings.saveSettings;
+            document.getElementById('ui-settings-server-info').innerHTML = strings.settingsServerInfo;
+            
+            // Loading text
+            document.getElementById('ui-loading-text').innerText = strings.loadingText;
+
+            // Audio Player Controls
+            document.getElementById('ui-audio-pause').innerText = strings.audioPause;
+            document.getElementById('ui-audio-stop').innerText = strings.audioStop;
+            
+            // Apply steps modal strings
+            document.getElementById('ui-apply-steps').innerText = strings.applySteps;
+            document.getElementById('ui-dialog-close').innerText = strings.dialogClose;
+            
+            // Update Mic button status label
+            updateMicStatus('idle');
+        }
+
+        // Helper to update the text under mic
+        function updateMicStatus(state) {
+            const micBtn = document.getElementById('btn-mic');
+            const micText = document.getElementById('mic-status');
+            const strings = locales[currentLang] || locales['en-IN'];
+
+            if (state === 'idle') {
+                micBtn.classList.remove('recording');
+                micText.innerText = strings.holdToSpeak;
+                micText.style.color = 'var(--text-main)';
+            } else if (state === 'listening') {
+                micBtn.classList.add('recording');
+                micText.innerText = strings.listening;
+                micText.style.color = 'var(--danger-color)';
+            } else if (state === 'processing') {
+                micBtn.classList.remove('recording');
+                micText.innerText = strings.processing;
+                micText.style.color = 'var(--warning-color)';
+            }
+        }
+
+        // Start Recording audio on Hold
+        async function startRecording(e) {
+            if (e) e.preventDefault(); // Prevents double events on mobile touch + mouse click
+            
+            // Clear any active audio playing
+            stopAudio();
+
+            // Check if settings require simulation mode
+            if (appSettings.simMode) {
+                // Browser Native Speech Recognition fallback for simulation
+                if (recognition) {
+                    try {
+                        recognition.lang = currentLang;
+                        recognition.start();
+                    } catch (err) {
+                        console.log("Recognition already started or error: ", err);
+                    }
+                } else {
+                    updateMicStatus('listening');
+                    document.getElementById('transcript-text').value = "Speech recognition not supported in this browser. Please type or use quick presets.";
+                }
+                return;
+            }
+
+            // Live Mode: MediaRecorder
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioChunks = [];
+                let options = { mimeType: 'audio/webm' };
+                if (!MediaRecorder.isTypeSupported('audio/webm')) {
+                    options = { mimeType: 'audio/mp4' };
+                }
+                
+                mediaRecorder = new MediaRecorder(stream, options);
+                mediaRecorder.ondataavailable = event => {
+                    if (event.data.size > 0) {
+                        audioChunks.push(event.data);
+                    }
+                };
+
+                mediaRecorder.onstop = async () => {
+                    updateMicStatus('processing');
+                    const audioBlob = new Blob(audioChunks, { type: mediaRecorder.mimeType });
+                    
+                    // Release microphone
+                    stream.getTracks().forEach(track => track.stop());
+                    
+                    // Upload to Serverless STT endpoint
+                    await runServerlessSpeechToText(audioBlob);
+                };
+
+                updateMicStatus('listening');
+                mediaRecorder.start();
+            } catch (err) {
+                console.error("Microphone access denied or error:", err);
+                alert("Microphone permission denied. Please allow microphone access or use presets/typing.");
+                updateMicStatus('idle');
+            }
+        }
+
+        // Stop Recording audio on Release
+        function stopRecording(e) {
+            if (e) e.preventDefault();
+
+            // Simulation mode releases browser SpeechRecognition
+            if (appSettings.simMode) {
+                if (recognition) {
+                    try {
+                        recognition.stop();
+                    } catch(err) {}
+                } else {
+                    updateMicStatus('idle');
+                }
+                return;
+            }
+
+            // Live mode MediaRecorder stop
+            if (mediaRecorder && mediaRecorder.state !== 'inactive') {
+                mediaRecorder.stop();
+            }
+        }
+
+        // Serverless STT API Call
+        async function runServerlessSpeechToText(audioBlob) {
+            const formData = new FormData();
+            const extension = mediaRecorder.mimeType.includes('mp4') ? 'mp4' : 'webm';
+            formData.append('file', audioBlob, `recording.${extension}`);
+            formData.append('language_code', currentLang);
+
+            try {
+                const response = await fetch('/api/stt', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error(`Speech to Text API returned error status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.transcript) {
+                    document.getElementById('transcript-text').value = data.transcript;
+                    handleTranscriptManualChange(); // Parse details and auto-fill form
+                } else {
+                    document.getElementById('transcript-text').value = "Unable to transcribe audio. Please try speaking again or use presets.";
+                }
+            } catch (err) {
+                console.error("STT Error:", err);
+                document.getElementById('transcript-text').value = `Error calling serverless STT endpoint: ${err.message}. Showing simulation fallback...`;
+                alert("STT Endpoint failed. Check backend environment variables or logs.");
+            } finally {
+                updateMicStatus('idle');
+            }
+        }
+
+        // Load Preset examples
+        function loadPreset(presetName) {
+            stopAudio();
+
+            const presets = {
+                'farmer': {
+                    text: {
+                        'hi-IN': "मैं उत्तर प्रदेश का रहने वाला हूँ, मेरी उम्र पैंतालीस वर्ष है, मैं एक किसान हूँ और मेरी मासिक आय पाँच हजार रुपये है।",
+                        'en-IN': "I am a farmer from Uttar Pradesh, age 45, male, and my monthly income is 5000 rupees.",
+                        'ta-IN': "நான் உத்தரப்பிரதேசத்தைச் சேர்ந்த ஒரு விவசாயி, என் வயது 45, எனது மாத வருமானம் 5000 ரூபாய்.",
+                        'te-IN': "నేను ఉత్తర ప్రదేశ్ నుండి ఒక రైతును, నా వయస్సు 45 సంవత్సరాలు, నా నెలవారీ ఆదాయం 5000 రూపాయలు.",
+                        'kn-IN': "ನಾನು ಉತ್ತರ ಪ್ರದೇಶದ ರೈತ, ನನ್ನ ವಯಸ್ಸು 45, ನನ್ನ ಮಾಸಿಕ ಆದಾಯ 5000 ರೂಪಾಯಿ.",
+                        'mr-IN': "मी उत्तर प्रदेशचा शेतकरी आहे, माझे वय 45 वर्षे आहे, माझे मासिक उत्पन्न 5000 रुपये आहे.",
+                        'bn-IN': "আমি উত্তর প্রদেশের একজন কৃষক, আমার বয়স ৪৫ বছর, আমার মাসিক আয় ৫০০০ টাকা।",
+                        'pa-IN': "ਮੈਂ ਉੱਤਰ ਪ੍ਰਦੇਸ਼ ਦਾ ਇੱਕ ਕਿਸਾਨ ਹਾਂ, ਮੇਰੀ ਉਮਰ 45 ਸਾਲ ਹੈ, ਮੇਰੀ ਮਹੀਨਾਵਾਰ ਆਮਦਨ 5000 ਰੁਪਏ ਹੈ।",
+                        'ml-IN': "ഞാൻ ഉത്തർപ്രദേശിലെ ഒരു കർഷകനാണ്, എന്റെ പ്രായം 45, എന്റെ പ്രതിമാസ വരുമാനം 5000 രൂപയാണ്.",
+                        'gu-IN': "હું ઉત્તર પ્રદેશનો ખેડૂત છું, મારી ઉંમર 45 વર્ષ છે, મારી માસિક આવક 5000 રૂપિયા છે।"
+                    },
+                    state: 'up', age: 45, gender: 'male', income: 5000, occupation: 'farmer'
+                },
+                'female_worker': {
+                    text: {
+                        'hi-IN': "मैं तमिलनाडु से एक महिला मजदूर हूँ, मेरी उम्र बत्तीस साल है, मेरी मासिक आय आठ हजार रुपये है।",
+                        'en-IN': "I am a female worker from Tamil Nadu, age 32, and my monthly income is 8000 rupees.",
+                        'ta-IN': "நான் தமிழ்நாட்டைச் சேர்ந்த ஒரு பெண் தொழிலாளி, என் வயது 32, எனது மாத வருமானம் 8000 ரூபாய்.",
+                        'te-IN': "నేను తమిళనాడు నుండి ఒక महिला కార్మికురాలిని, నా వయస్సు 32 సంవత్సరాలు, నా నెలవారీ ఆదాయం 8000 రూపాయలు.",
+                        'kn-IN': "ನಾನು ತಮಿಳುನಾಡಿನ ಮಹಿಳಾ ಕಾರ್ಮಿಕಳು, ನನ್ನ ವಯಸ್ಸು 32, ನನ್ನ ಮಾಸಿಕ ಆದಾಯ 8000 ರೂಪಾಯಿ.",
+                        'mr-IN': "मी तामिळनाडूची महिला मजूर आहे, माझे वय 32 वर्षे आहे, माझे मासिक उत्पन्न 8000 रुपये आहे.",
+                        'bn-IN': "আমি তামিলনাড়ুর একজন মহিলা শ্রমিক, আমার বয়স ৩২ বছর, আমার মাসিক আয় ৮০০০ টাকা।",
+                        'pa-IN': "ਮੈਂ ਤਾਮਿਲਨਾਡੂ ਦੀ ਇੱਕ ਮਹਿਲਾ ਮਜ਼ਦੂਰ ਹਾਂ, ਮੇਰੀ ਉਮਰ 32 ਸਾਲ ਹੈ, ਮੇਰੀ ਮਹੀਨਾਵਾਰ ਆਮਦਨ 8000 ਰੁਪਏ ਹੈ।",
+                        'ml-IN': "ഞാൻ തമിഴ്‌നാട്ടിൽ നിന്നുള്ള ഒരു വനിതാ തൊഴിലാളിയാണ്, എന്റെ പ്രായം 32, എന്റെ പ്രതിമാസ വരുമാനം 8000 രൂപയാണ്.",
+                        'gu-IN': "હું તમિલનાડુની મહિલા મજૂર છું, મારી ઉંમર 32 વર્ષ છે, મારી માસિક આવક 8000 રૂપિયા છે।"
+                    },
+                    state: 'tn', age: 32, gender: 'female', income: 8000, occupation: 'worker'
+                },
+                'girl_child': {
+                    text: {
+                        'hi-IN': "मैं कर्नाटक से आठ वर्ष की लड़की हूँ, मेरी माता-पिता की आय दो हजार रुपये है।",
+                        'en-IN': "I am an 8-year-old girl child from Karnataka, and parents monthly income is 2000 rupees.",
+                        'ta-IN': "நான் கர்நாடகாவைச் சேர்ந்த 8 வயது சிறுமி, என் பெற்றோர் வருமானம் 2000 ரூபாய்.",
+                        'te-IN': "నేను కర్ణాటకకు చెందిన 8 సంవత్సరాల బాలికను, నా తల్లిదండ్రుల ఆదాయం 2000 రూపాయలు.",
+                        'kn-IN': "ನಾನು ಕರ್ನಾಟಕದ 8 ವರ್ಷದ ಬಾಲಕಿ, ನನ್ನ ಹೆತ್ತವರ ಆದಾಯ 2000 ರೂಪಾಯಿ.",
+                        'mr-IN': "मी कर्नाटकची 8 वर्षांची मुलगी आहे, माझ्या पालकांचे उत्पन्न 2000 रुपये आहे.",
+                        'bn-IN': "আমি কর্ণাটকের একজন ৮ বছরের বালিকা, আমার পিতা-মাতার মাসিক আয় ২০০০ টাকা।",
+                        'pa-IN': "ਮੈਂ ਕਰਨਾਟਕ ਦੀ ਇੱਕ 8 ਸਾਲਾ ਬੱਚੀ ਹਾਂ, ਮੇਰੇ ਮਾਪਿਆਂ ਦੀ ਆਮਦਨ 2000 ਰੁਪਏ ਹੈ।",
+                        'ml-IN': "ഞാൻ കർണാടകയിൽ നിന്നുള്ള 8 വയസ്സുള്ള ഒരു പെൺകുട്ടിയാണ്, എന്റെ മാതാപിതാക്കളുടെ വരുമാനം 2000 രൂപയാണ്.",
+                        'gu-IN': "હું કર્ણાટકની 8 વર્ષની બાળકી છું, મારા માતા-પિતાની માસિક આવક 2000 રૂપિયા છે।"
+                    },
+                    state: 'ka', age: 8, gender: 'female', income: 2000, occupation: 'other'
+                },
+                'student': {
+                    text: {
+                        'hi-IN': "मैं पश्चिम बंगाल का एक उन्नीस वर्ष का छात्र हूँ और मेरी मासिक आय शून्य या पंद्रह सौ रुपये है।",
+                        'en-IN': "I am a 19-year-old student from West Bengal, male, monthly income 1500 rupees.",
+                        'ta-IN': "நான் மேற்கு வங்காளத்தைச் சேர்ந்த ஒரு 19 வயது மாணவன், எனது மாத வருமானம் 1500 ரூபாய்.",
+                        'te-IN': "నేను పశ్చిమ బెంగాల్ నుండి ఒక 19 సంవత్సరాల విద్యార్థిని, నా నెలవారీ ఆదాయం 1500 రూపాయలు.",
+                        'kn-IN': "ನಾನು ಪશ્ಚಿಮ ಬಂಗಾಳದ 19 ವರ್ಷದ ವಿದ್ಯಾರ್ಥಿ, ನನ್ನ ಮಾಸಿಕ ಆದಾಯ 1500 ರೂಪಾಯಿ.",
+                        'mr-IN': "मी पश्चिम बंगालचा 19 वर्षांचा विद्यार्थी आहे, माझे मासिक उत्पन्न 1500 रुपये आहे.",
+                        'bn-IN': "আমি পশ্চিমবঙ্গ থেকে ১৯ বছর বয়সী একজন ছাত্র, আমার মাসিক আয় ১৫০০ টাকা।",
+                        'pa-IN': "ਮੈਂ ਪੱਛਮੀ ਬੰਗਾਲ ਦਾ ਇੱਕ 19 ਸਾਲਾ ਵਿਦਿਆਰਥੀ ਹਾਂ, ਮੇਰੀ ਮਹੀਨਾਵਾਰ ਆਮਦਨ 1500 ਰੁਪਏ ਹੈ।",
+                        'ml-IN': "ഞാൻ പശ്ചിമ ਬംഗാളിൽ നിന്നുള്ള ഒരു 19 വയസ്സുള്ള വിദ്യാർത്ഥിയാണ്, എന്റെ പ്രതിമാസ വരുമാനം 1500 രൂപയാണ്.",
+                        'gu-IN': "હું પશ્ચિમ બંગાળનો 19 વર્ષનો વિદ્યાર્થી છું, મારી માસિક આવક 1500 રૂપિયા છે।"
+                    },
+                    state: 'wb', age: 19, gender: 'male', income: 1500, occupation: 'student'
+                }
+            };
+
+            const preset = presets[presetName];
+            if (preset) {
+                document.getElementById('transcript-text').value = preset.text[currentLang] || preset.text['en-IN'];
+                
+                document.getElementById('form-state').value = preset.state;
+                document.getElementById('form-age').value = preset.age;
+                document.getElementById('form-income').value = preset.income;
+                document.getElementById('form-occupation').value = preset.occupation;
+                
+                const genders = document.getElementsByName('form-gender');
+                for (let g of genders) {
+                    g.checked = (g.value === preset.gender);
+                }
+            }
+        }
+
+        // Automatic heuristic extraction from transcript text
+        function handleTranscriptManualChange() {
+            const text = document.getElementById('transcript-text').value.toLowerCase();
+            if (!text.trim()) return;
+
+            const numbers = text.match(/\d+/g);
+            let age = null;
+            let income = null;
+
+            if (numbers) {
+                const parsedNums = numbers.map(Number).sort((a,b) => a - b);
+                if (parsedNums.length === 1) {
+                    if (parsedNums[0] < 100) {
+                        age = parsedNums[0];
+                    } else {
+                        income = parsedNums[0];
+                    }
+                } else if (parsedNums.length >= 2) {
+                    const potentialAges = parsedNums.filter(n => n >= 5 && n < 100);
+                    const potentialIncomes = parsedNums.filter(n => n >= 100);
+                    
+                    if (potentialAges.length > 0) age = potentialAges[0];
+                    if (potentialIncomes.length > 0) income = potentialIncomes[potentialIncomes.length - 1];
+                }
+            }
+
+            if (age !== null) {
+                document.getElementById('form-age').value = age;
+            }
+            if (income !== null) {
+                document.getElementById('form-income').value = income;
+            }
+
+            const stateKeywords = {
+                'up': ["uttar pradesh", "उत्तर प्रदेश", "உத்தரப் பிரதேசம்", "ఉత్తర ప్రదేశ్", "ಉತ್ತರ ಪ್ರದೇಶ", "यूपी", "up"],
+                'br': ["bihar", "बिहार", "பீகார்", "బీహార్", "ಬಿಹಾರ"],
+                'tn': ["tamil nadu", "तमिलनाडु", "தமிழ்நாடு", "తమిళనాడు", "ತಮಿಳುನಾಡು", "तमिळनाडू"],
+                'te': ["telangana", "तेलंगाना", "தெலுங்கானா", "తెలంగాణ", "ತೆಲಂಗಾಣ", "तेलंगणा"],
+                'ka': ["karnataka", "कर्नाटक", "கர்நாடகா", "ಕರ್ನಾಟಕ", "కార్ణాటక"],
+                'mh': ["maharashtra", "महाराष्ट्र", "மகாராஷ்டிரா", "మహారాష్ట్ర", "ಮಹಾರಾಷ್ಟ್ರ", "मुंबई"],
+                'wb': ["bengal", "पश्चिम बंगाल", "வங்காளம்", "బెంగాల్", "ಬೆಂಗಾಲ್"],
+                'gj': ["gujarat", "गुजरात", "குஜરાத்", "ગુજરાત", "ગુજરાત"],
+                'pb': ["punjab", "पंजाब", "ਪੰਜਾਬ", "పంజాబ్", "ਪੰਜਾਬ"],
+                'kl': ["kerala", "केरल", "കേരളം", "കേരള"]
+            };
+
+            for (const [key, keywords] of Object.entries(stateKeywords)) {
+                if (keywords.some(kw => text.includes(kw))) {
+                    document.getElementById('form-state').value = key;
+                    break;
+                }
+            }
+
+            const farmerKeywords = ["farmer", "किसान", "खेती", "कृषि", "விவசாயி", "రైతు", "ರೈತ", "शेतकरी", "কৃষক", "ਕਿਸਾਨ", "കർഷകൻ", "ખેડૂત", "kisan"];
+            const workerKeywords = ["worker", "मजदूर", "कामगार", "श्रमिक", "தொழिलाळी", "కార్మికుడు", "ಕಾರ್ಮಿಕ", "मजूर", "শ্রমিক", "ਮਜ਼ਦੂਰ", "തൊഴിലാളി", "મજૂર", "mazdoor"];
+            const studentKeywords = ["student", "छात्र", "विद्यार्थी", "மாணவர்", "విద్యార్థి", "ವಿದ್ಯಾರ್ಥಿ", "ছাত্র", "ਵਿਦਿਆਰਥੀ", "വിദ്യാർത്ഥി", "વિદ્યાર્થી", "chhatra"];
+
+            if (farmerKeywords.some(kw => text.includes(kw))) {
+                document.getElementById('form-occupation').value = 'farmer';
+            } else if (workerKeywords.some(kw => text.includes(kw))) {
+                document.getElementById('form-occupation').value = 'worker';
+            } else if (studentKeywords.some(kw => text.includes(kw))) {
+                document.getElementById('form-occupation').value = 'student';
+            }
+
+            const femaleKeywords = ["female", "महिला", "लड़की", "स्त्री", "பெண்", "మహిళ", "స్త్రీ", "ಮಹಿಳೆ", "महीला", "নারী", "মেয়ে", "ਔਰਤ", "പെണ്ണ്", "സ്ത്രീ", "સ્ત્રી", "છોકરી", "aurat", "ladki"];
+            const maleKeywords = ["male", "पुरुष", "लड़का", "ஆண்", "పురుషుడు", "పురుష", "ಪುರುಷ", "पुरुष", "पुरुष", "ছেলে", "ਮਰਦ", "ਪੁਰਖ"];
+
+            const genders = document.getElementsByName('form-gender');
+            if (femaleKeywords.some(kw => text.includes(kw))) {
+                for (let g of genders) if (g.value === 'female') g.checked = true;
+            } else if (maleKeywords.some(kw => text.includes(kw))) {
+                for (let g of genders) if (g.value === 'male') g.checked = true;
+            }
+        }
+
+        // Main eligibility calculation orchestrator
+        async function runEligibilityCheck() {
+            stopAudio();
+
+            const details = {
+                state: document.getElementById('form-state').value,
+                age: document.getElementById('form-age').value,
+                gender: document.querySelector('input[name="form-gender"]:checked').value,
+                income: document.getElementById('form-income').value,
+                occupation: document.getElementById('form-occupation').value,
+                transcript: document.getElementById('transcript-text').value
+            };
+
+            document.getElementById('schemes-grid').style.display = 'none';
+            document.getElementById('loading-container').style.display = 'flex';
+
+            if (appSettings.simMode) {
+                setTimeout(() => {
+                    runSimulationModeCheck(details);
+                }, 1000);
+            } else {
+                await runServerlessEligibilityCheck(details);
+            }
+        }
+
+        // Serverless Backend API Execution
+        async function runServerlessEligibilityCheck(details) {
+            const strings = locales[currentLang];
+
+            try {
+                // 1. Call secure chat endpoint
+                const chatResponse = await fetch('/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        details: details,
+                        language_code: currentLang
+                    })
+                });
+
+                if (!chatResponse.ok) {
+                    const errData = await chatResponse.json().catch(() => ({}));
+                    throw new Error(errData.error || `Server responded with ${chatResponse.status}`);
+                }
+
+                const chatData = await chatResponse.json();
+                const responseText = chatData.responseText;
+                const matchedSchemes = chatData.schemes || parseClaudeResponse(responseText);
+                
+                displaySchemeCards(matchedSchemes);
+
+                // 2. Play Audio via Serverless TTS
+                const textToSpeak = responseText
+                    .replace(/###/g, '')
+                    .replace(/\*\*/g, '')
+                    .replace(/How to Apply:/gi, strings.applySteps || 'How to Apply:')
+                    .trim();
+
+                if (textToSpeak) {
+                    await runServerlessTextToSpeech(textToSpeak);
+                }
+            } catch (err) {
+                console.error("Serverless API Error:", err);
+                alert(`Error: ${err.message}. Check backend environment variables or logs. Reverting to Simulation Mode.`);
+                runSimulationModeCheck(details);
+            } finally {
+                document.getElementById('loading-container').style.display = 'none';
+                document.getElementById('schemes-grid').style.display = 'flex';
+            }
+        }
+
+        // Parse structured response from text
+        function parseClaudeResponse(text) {
+            const sections = text.split(/###\s+/);
+            const schemes = [];
+            const strings = locales[currentLang];
+
+            for (const section of sections) {
+                if (!section.trim()) continue;
+
+                const lines = section.split('\n');
+                const name = lines[0].trim();
+                const content = lines.slice(1).join('\n').trim();
+
+                let benefit = content;
+                let apply = '';
+
+                const applyMarkers = [
+                    'how to apply:',
+                    'आवेदन कैसे करें:',
+                    'விண்ணப்பிப்பது எப்படி:',
+                    'అప్లై చేయడం ఎలా:',
+                    'ಅನ್ವಯಿಸುವುದು ಹೇಗೆ:',
+                    'कसे अर्ज करावे:',
+                    'কিভাবে আবেদন করবেন:',
+                    'ਕਿਵੇਂ ਅਪਲਾਈ ਕਰਨਾ ਹੈ:',
+                    'അപേക്ഷിക്കേണ്ട വിധം:',
+                    'કેવી રીતે અરજી કરવી:'
+                ];
+
+                let markerIndex = -1;
+                let foundMarkerLength = 0;
+                
+                for (const marker of applyMarkers) {
+                    const idx = content.toLowerCase().indexOf(marker);
+                    if (idx !== -1) {
+                        markerIndex = idx;
+                        foundMarkerLength = marker.length;
+                        break;
+                    }
+                }
+
+                if (markerIndex !== -1) {
+                    benefit = content.substring(0, markerIndex).trim();
+                    apply = content.substring(markerIndex + foundMarkerLength).trim();
+                }
+
+                schemes.push({
+                    name: name,
+                    benefit: benefit,
+                    apply: apply || (strings.applySteps + ' Contact your local Gram Panchayat for assistance.')
+                });
+            }
+
+            return schemes;
+        }
+
+        // Serverless TTS Call
+        async function runServerlessTextToSpeech(text) {
+            try {
+                const response = await fetch('/api/tts', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        text: text,
+                        language_code: currentLang
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`TTS API returned error status: ${response.status}`);
+                }
+
+                const data = await response.json();
+                if (data.audioContent) {
+                    playBase64Audio(data.audioContent);
+                }
+            } catch (err) {
+                console.error("Serverless TTS Error:", err);
+                speakSimulated(text);
+            }
+        }
+
+        // Play base64 audio payload in browser
+        function playBase64Audio(base64Data) {
+            stopAudio();
+            
+            const strings = locales[currentLang];
+            const audioUrl = `data:audio/mp3;base64,${base64Data}`;
+            currentAudio = new Audio(audioUrl);
+            
+            const player = document.getElementById('tts-player');
+            const status = document.getElementById('tts-player-status');
+            status.innerText = strings.speakingText || "🔊 Speaking details...";
+            player.style.display = 'flex';
+
+            currentAudio.play();
+
+            currentAudio.onended = () => {
+                player.style.display = 'none';
+                currentAudio = null;
+            };
+        }
+
+        // Local Simulation Eligibility Parser (Mock Rules Engine)
+        function runSimulationModeCheck(details) {
+            const age = Number(details.age) || 30;
+            const gender = details.gender || 'male';
+            const income = Number(details.income) || 5000;
+            const occupation = details.occupation || 'worker';
+            const state = details.state || 'up';
+
+            const matchedSchemes = [];
+
+            // 1. PM Kisan
+            if (occupation === 'farmer' && income <= 15000) {
+                matchedSchemes.push({
+                    name: 'PM Kisan Samman Nidhi (पीएम किसान)',
+                    benefit: 'Under this scheme, land-holding farmer families receive financial assistance of ₹6,000 per year, paid in three equal installments of ₹2,000 directly into their bank accounts. It is designed to meet the agricultural inputs and domestic needs of farmers.',
+                    apply: '1. Visit the official PM-Kisan portal (pmkisan.gov.in).\n2. Register under the "Farmers Corner" or visit your nearest Common Service Center (CSC).\n3. Submit your land records, Aadhaar card, bank account details, and mobile number for verification.'
+                });
+            }
+
+            // 2. Ayushman Bharat (PM-JAY)
+            if (income <= 10000 || occupation === 'worker') {
+                matchedSchemes.push({
+                    name: 'Ayushman Bharat PM-JAY (आयुष्मान भारत)',
+                    benefit: 'This scheme provides free health cover of up to ₹5,00,000 per family per year for secondary and tertiary care hospitalization across India. It covers medical expenses, tests, and pre/post-hospitalization charges.',
+                    apply: '1. Visit the official PMJAY portal (pmjay.gov.in) to check eligibility using your ration card or mobile number.\n2. If eligible, go to any empanelled public or private hospital or a CSC.\n3. Present your Aadhaar Card and Ration Card to obtain your Golden Ayushman Card.'
+                });
+            }
+
+            // 3. MNREGA
+            if (age >= 18 && (occupation === 'worker' || occupation === 'farmer')) {
+                matchedSchemes.push({
+                    name: 'MNREGA Job Card (मनरेगा)',
+                    benefit: 'This legal entitlement guarantees at least 100 days of manual wage employment in a financial year to every rural household whose adult members volunteer to do unskilled manual work. It secures rural livelihoods.',
+                    apply: '1. Approach your local Gram Panchayat office in the village.\n2. Submit a written or oral request for registration with details of adult household members.\n3. The Gram Panchayat will verify details and issue a free MNREGA Job Card within 15 days.'
+                });
+            }
+
+            // 4. PM Awas Yojana (Gramin)
+            if (income <= 8000 && (occupation === 'worker' || occupation === 'farmer')) {
+                matchedSchemes.push({
+                    name: 'PM Awas Yojana - Gramin (पीएम आवास योजना)',
+                    benefit: 'This scheme offers financial assistance of ₹1.2 Lakh in plains and ₹1.3 Lakh in hilly/difficult areas for the construction of a permanent, hygienic pucca house with basic facilities like cooking space.',
+                    apply: '1. Beneficiaries are identified using housing deprivation parameters from SECC 2011 data verified by Gram Sabhas.\n2. Check your name in the PMAY-G beneficiary list at pmayg.nic.in or consult your Gram Panchayat.\n3. The funds are disbursed in installments directly to the bank account based on construction progress.'
+                });
+            }
+
+            // 5. Sukanya Samriddhi Yojana
+            if (gender === 'female' && age <= 10) {
+                matchedSchemes.push({
+                    name: 'Sukanya Samriddhi Yojana (सुकन्या समृद्धि योजना)',
+                    benefit: 'A dedicated savings scheme for girl children under 10 years, offering a highly attractive tax-free interest rate (around 8.2%). The account matures after 21 years or upon marriage, helping secure higher education funds.',
+                    apply: '1. Visit any Post Office or authorized nationalized bank branch.\n2. Fill out the SSY account opening form.\n3. Submit the girl child\'s birth certificate along with identity and address proofs of the parent/guardian.'
+                });
+            }
+
+            // 6. PM Ujjwala Yojana
+            if (gender === 'female' && income <= 10000 && occupation !== 'student') {
+                matchedSchemes.push({
+                    name: 'PM Ujjwala Yojana (पीएम उज्ज्वला योजना)',
+                    benefit: 'This program provides clean cooking fuel by offering free LPG connections to women belonging to below-poverty-line (BPL) households, along with a free first cylinder and a gas stove.',
+                    apply: '1. Apply at your nearest LPG distributor office (Indane, Bharat Gas, or HP Gas) or submit details via pmuy.gov.in.\n2. Provide Aadhaar Card, BPL Ration Card, Bank Account Details, and a declaration of non-connection.\n3. Connection will be issued after verification of documents.'
+                });
+            }
+
+            // 7. PM Mudra Yojana
+            if (age >= 18 && (occupation === 'worker' || occupation === 'other')) {
+                matchedSchemes.push({
+                    name: 'PM Mudra Yojana (पीएम मुद्रा योजना)',
+                    benefit: 'Provides collateral-free business loans up to ₹10 Lakh for starting or expanding micro-businesses or shopkeeping. Loans are categorized as Shishu (up to ₹50,000), Kishor (up to ₹5 Lakh), and Tarun (up to ₹10 Lakh).',
+                    apply: '1. Visit any commercial, cooperative, or Regional Rural Bank, or apply online on the Udyami Mitra portal (udyamimitra.in).\n2. Present a business plan, machinery quotations, address proof, and identity documents.\n3. The bank reviews and dispatches funds directly to start your micro-enterprise.'
+                });
+            }
+
+            // 8. PM Fasal Bima Yojana
+            if (occupation === 'farmer') {
+                matchedSchemes.push({
+                    name: 'PM Fasal Bima Yojana (पीएम फसल बीमा योजना)',
+                    benefit: 'A comprehensive crop insurance scheme providing financial support to farmers experiencing crop loss or damage arising from natural calamities, pests, and diseases. Farmers pay a minimal premium of 1.5% to 5%.',
+                    apply: '1. Farmers with crop loans (KCC) are enrolled automatically by their lending bank.\n2. Non-loanee farmers can apply online at pmfby.gov.in or through their nearest CSC/bank.\n3. Submit crop sowing certificate, land records, Aadhaar card, and premium payment receipt.'
+                });
+            }
+
+            // 9. Atal Pension Yojana
+            if (age >= 18 && age <= 40) {
+                matchedSchemes.push({
+                    name: 'Atal Pension Yojana (अटल पेंशन योजना)',
+                    benefit: 'A pension scheme for workers in the unorganized sector. It guarantees a minimum monthly pension of ₹1,000, ₹2,000, ₹3,000, ₹4,000, or ₹5,000 after reaching 60 years of age, depending on contribution amounts.',
+                    apply: '1. Visit the bank or post office branch where your savings account is held.\n2. Fill out the APY registration form.\n3. Set up auto-debit consent for monthly contributions. Keep the account funded on contribution dates.'
+                });
+            }
+
+            // 10. PM Jan Dhan Yojana
+            matchedSchemes.push({
+                name: 'PM Jan Dhan Yojana (जन धन खाता)',
+                benefit: 'A national financial inclusion account providing a basic zero-balance savings account, a free RuPay debit card, ₹1 Lakh accidental insurance cover, and an overdraft facility of up to ₹10,000 for eligible account holders.',
+                apply: '1. Visit your nearest bank branch or meet a Bank Mitra (banking agent).\n2. Fill out the Jan Dhan account opening form.\n3. Submit a passport-size photo and your Aadhaar Card as official valid identity documents.'
+            });
+
+            displaySchemeCards(matchedSchemes);
+
+            const schemeNamesOnly = matchedSchemes.map(m => m.name.split(' (')[0]).join(', ');
+            let speakSummary = "";
+
+            if (currentLang.startsWith('hi')) {
+                speakSummary = `आपके विवरण के अनुसार, आप ${matchedSchemes.length} सरकारी योजनाओं के लिए पात्र हैं। जिनमें शामिल हैं: ${schemeNamesOnly}। कृपया योजना कार्ड के नीचे 'आवेदन कैसे करें' बटन दबाकर आवेदन करने की प्रक्रिया देखें।`;
+            } else if (currentLang.startsWith('ta')) {
+                speakSummary = `உங்கள் விவரங்களின்படி, நீங்கள் ${matchedSchemes.length} அரசு திட்டங்களுக்கு தகுதி பெற்றுள்ளீர்கள்: ${schemeNamesOnly}. விண்ணப்பிக்கும் முறையை அறிய கீழே உள்ள கார்டில் 'விண்ணப்பிப்பது எப்படி' என்பதை அழுத்தவும்.`;
+            } else if (currentLang.startsWith('te')) {
+                speakSummary = `మీ వివరాల ప్రకారం, మీరు ${matchedSchemes.length} ప్రభుత్వ పథకాలకు అర్హులయ్యారు: ${schemeNamesOnly}. దరఖాస్తు విధానం కోసం క్రింద ఉన్న కార్డ్‌లో 'అప్లై చేయడం ఎలా' క్లిక్ చేయండి.`;
+            } else if (currentLang.startsWith('kn')) {
+                speakSummary = `ನಿಮ್ಮ ವಿವರಗಳ ಪ್ರಕಾರ, ನೀವು ${matchedSchemes.length} ಸರ್ಕಾರಿ ಯೋಜನೆಗಳಿಗೆ ಅರ್ಹರಾಗಿದ್ದೀರಿ: ${schemeNamesOnly}. ಹೆಚ್ಚಿನ ಮಾಹಿತಿಗಾಗಿ ಕೆಳಗಿನ 'ಅನ್ವಯಿಸುವುದು ಹೇಗೆ' ಬಟನ್ ಒತ್ತಿರಿ.`;
+            } else if (currentLang.startsWith('mr')) {
+                speakSummary = `तुमच्या माहितीनुसार, तुम्ही ${matchedSchemes.length} सरकारी योजनांसाठी पात्र आहात: ${schemeNamesOnly}. अर्ज करण्याची पद्धत पाहण्यासाठी खालील 'कसे अर्ज करावे' बटण दाबा.`;
+            } else if (currentLang.startsWith('bn')) {
+                speakSummary = `আপনার বিবরণ অনুযায়ী, আপনি ${matchedSchemes.length}টি সরকারি প্রকল্পের জন্য যোগ্য: ${schemeNamesOnly}। আবেদনের প্রক্রিয়া দেখতে নিচে দেওয়া কার্ডে 'কিভাবে আবেদন করবেন' বোতাম টিপুন।`;
+            } else if (currentLang.startsWith('pa')) {
+                speakSummary = `ਤੁਹਾਡੇ ਵੇਰਵਿਆਂ ਅਨੁਸਾਰ, ਤੁਸੀਂ ${matchedSchemes.length} ਸਰਕਾਰੀ ਯੋਜਨਾਵਾਂ ਲਈ ਯੋਗ ਹੋ: ${schemeNamesOnly}। ਅਪਲਾਈ ਕਰਨ ਦਾ ਤਰੀਕਾ ਦੇਖਣ ਲਈ ਹੇਠਾਂ ਦਿੱਤੇ ਕਾਰਡ ਵਿੱਚ 'ਕਿਵੇਂ ਅਪਲਾਈ ਕਰਨਾ ਹੈ' ਬਟਨ ਦਬਾਓ।`;
+            } else if (currentLang.startsWith('ml')) {
+                speakSummary = `നിങ്ങളുടെ വിവരങ്ങൾ അനുസരിച്ച്, നിങ്ങൾ ${matchedSchemes.length} സർക്കാർ പദ്ധതികൾക്ക് അർഹനാണ്: ${schemeNamesOnly}. അപേക്ഷിക്കേണ്ട വിധം അറിയാൻ താഴെയുള്ള 'അപേക്ഷിക്കേണ്ട വിധം' ക്ലിക്ക് ചെയ്യുക.`;
+            } else if (currentLang.startsWith('gu')) {
+                speakSummary = `તમારી વિગતો મુજબ, તમે ${matchedSchemes.length} સરકારી યોજનાઓ માટે પાત્ર છો: ${schemeNamesOnly}. અરજી કરવાની પ્રક્રિયા જોવા માટે નીચે 'કેવી રીતે અરજી કરવી' બટન દબાવો.`;
+            } else {
+                speakSummary = `Based on your details, you qualify for ${matchedSchemes.length} government schemes: ${schemeNamesOnly}. Please click 'How to Apply' on any card below to see step-by-step instructions.`;
+            }
+
+            speakSimulated(speakSummary);
+
+            document.getElementById('loading-container').style.display = 'none';
+            document.getElementById('schemes-grid').style.display = 'flex';
+        }
+
+        // Display cards in UI
+        function displaySchemeCards(schemes) {
+            const grid = document.getElementById('schemes-grid');
+            grid.innerHTML = '';
+            
+            const strings = locales[currentLang] || locales['en-IN'];
+
+            if (schemes.length === 0) {
+                grid.innerHTML = `
+                    <div style="text-align: center; color: var(--text-muted); padding: 40px 0;">
+                        ${strings.noSchemes}
+                    </div>
+                `;
+                return;
+            }
+
+            schemes.forEach(scheme => {
+                const card = document.createElement('div');
+                card.className = 'scheme-card';
+                
+                card.innerHTML = `
+                    <div>
+                        <div class="scheme-card-header">${scheme.name}</div>
+                        <div class="scheme-card-benefit">${scheme.benefit}</div>
+                    </div>
+                    <div class="scheme-card-actions">
+                        <button class="btn-apply" onclick="openApplyDetails('${scheme.name.replace(/'/g, "\\'")}', '${scheme.apply.replace(/\n/g, '\\n').replace(/'/g, "\\'")}')">
+                            ${strings.howToApply}
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Simulated Text-to-Speech using browser Synthesis
+        function speakSimulated(text) {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                
+                const strings = locales[currentLang];
+                
+                const player = document.getElementById('tts-player');
+                const status = document.getElementById('tts-player-status');
+                status.innerText = strings.speakingText || "🔊 Speaking details...";
+                player.style.display = 'flex';
+
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = currentLang;
+                
+                utterance.onend = () => {
+                    player.style.display = 'none';
+                };
+                utterance.onerror = () => {
+                    player.style.display = 'none';
+                };
+
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        // Control playback buttons
+        function pauseAudio() {
+            if (currentAudio) {
+                if (currentAudio.paused) {
+                    currentAudio.play();
+                    document.getElementById('ui-audio-pause').innerText = locales[currentLang].audioPause || "Pause";
+                } else {
+                    currentAudio.pause();
+                    document.getElementById('ui-audio-pause').innerText = "Play";
+                }
+            } else if ('speechSynthesis' in window) {
+                if (window.speechSynthesis.speaking) {
+                    if (window.speechSynthesis.paused) {
+                        window.speechSynthesis.resume();
+                        document.getElementById('ui-audio-pause').innerText = locales[currentLang].audioPause || "Pause";
+                    } else {
+                        window.speechSynthesis.pause();
+                        document.getElementById('ui-audio-pause').innerText = "Play";
+                    }
+                }
+            }
+        }
+
+        function stopAudio() {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio = null;
+            }
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+            document.getElementById('tts-player').style.display = 'none';
+        }
+
+        // Open Dialog/Modal for Apply Steps
+        function openApplyDetails(schemeName, applyText) {
+            document.getElementById('dialog-scheme-name').innerText = schemeName;
+            document.getElementById('dialog-apply-content').innerText = applyText;
+            
+            const dialog = document.getElementById('apply-dialog');
+            dialog.showModal();
+        }
+
+        // Close details dialog
+        function closeDialog() {
+            const dialog = document.getElementById('apply-dialog');
+            dialog.close();
+        }
+    </script>
+</body>
+</html>

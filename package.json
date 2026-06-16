@@ -1,0 +1,9 @@
+{
+  "name": "adhikaar",
+  "version": "1.0.0",
+  "description": "Adhikaar - Government Scheme Eligibility Finder for Rural India",
+  "private": true,
+  "dependencies": {
+    "busboy": "^1.6.0"
+  }
+}
