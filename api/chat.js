@@ -32,6 +32,8 @@ How to Apply: [How to register/apply]
 
 Do not write anything else. Keep it warm, simple, and respond ONLY in the same language as the user spoke (Language code: ${langCode}). Remember, respond in maximum 4 sentences per scheme.`;
 
+    const modelName = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
+
     try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
             method: 'POST',
@@ -41,7 +43,7 @@ Do not write anything else. Keep it warm, simple, and respond ONLY in the same l
                 'content-type': 'application/json'
             },
             body: JSON.stringify({
-                model: 'claude-3-5-sonnet-20241022',
+                model: modelName,
                 max_tokens: 3000,
                 system: "You are Adhikaar, a government scheme eligibility assistant for rural Indians. Based on what the user tells you about themselves, identify which of these schemes they qualify for and explain simply what each scheme gives them and how to apply: PM Kisan, Ayushman Bharat, MNREGA, PM Awas Yojana, Sukanya Samriddhi Yojana, PM Ujjwala Yojana, PM Mudra Yojana, PM Fasal Bima Yojana, Atal Pension Yojana, PM Jan Dhan Yojana. Respond in maximum 4 sentences per scheme. Be warm and simple. Respond in the same language the user spoke in.",
                 messages: [
