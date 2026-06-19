@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -541,7 +541,7 @@
             <div class="lang-selector-container">
                 <label for="lang-select" id="ui-lang-select-label">भाषा चुनें | Select Language:</label>
                 <select id="lang-select" class="lang-select" onchange="changeLanguage(this.value)">
-                    <option value="hi-IN" selected>हिन्दी (Hindi)</option>
+                    <option value="hi-IN">हिन्दी (Hindi)</option>
                     <option value="ta-IN">தமிழ் (Tamil)</option>
                     <option value="te-IN">తెలుగు (Telugu)</option>
                     <option value="kn-IN">ಕನ್ನಡ (Kannada)</option>
@@ -550,7 +550,7 @@
                     <option value="pa-IN">ਪੰਜਾਬੀ (Punjabi)</option>
                     <option value="ml-IN">മലയാളം (Malayalam)</option>
                     <option value="gu-IN">ગુજરાતી (Gujarati)</option>
-                    <option value="en-IN">English</option>
+                    <option value="en-IN" selected>English</option>
                 </select>
             </div>
         </div>
@@ -730,7 +730,7 @@
                 <h3 style="margin-bottom: 16px; color: var(--primary-color);" id="ui-settings-title">एपीआई कुंजी सेटिंग्स</h3>
                 
                 <label class="checkbox-container">
-                    <input type="checkbox" id="setting-sim-mode" checked onchange="toggleSimulationMode(this.checked)">
+                    <input type="checkbox" id="setting-sim-mode" onchange="toggleSimulationMode(this.checked)">
                     <span id="ui-setting-sim">डेमो / सिमुलेशन मोड सक्षम रखें (बिना एपीआई कुंजी के चलाएं)</span>
                 </label>
 
@@ -1170,10 +1170,10 @@
 
         // Current system state variables
         let appSettings = {
-            simMode: true
+            simMode: false
         };
 
-        let currentLang = 'hi-IN';
+        let currentLang = 'en-IN';
         let mediaRecorder = null;
         let audioChunks = [];
         let recognition = null; // Browser speech recognition fallback
@@ -1197,7 +1197,7 @@
                     console.error("Error loading settings from localStorage", e);
                 }
             } else {
-                appSettings.simMode = true;
+                appSettings.simMode = false;
             }
             toggleSimulationMode(appSettings.simMode);
         }
