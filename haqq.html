@@ -568,11 +568,7 @@
         </div>
     </header>
 
-    <!-- Demo Banner -->
-    <div id="mode-banner" class="banner banner-demo">
-        <span style="font-size: 16px;">🔍</span>
-        <span id="ui-mode-text">डेमो मोड सक्रिय है। लाइव एआई सुविधाओं के लिए नीचे सेटिंग्स में एपीआई कुंजी दर्ज करें।</span>
-    </div>
+
 
     <!-- Main Content Area -->
     <main class="main-container">
@@ -1320,17 +1316,7 @@
 
         // Update mode banner at top
         function updateBanner() {
-            const banner = document.getElementById('mode-banner');
-            const bannerText = document.getElementById('ui-mode-text');
-            const strings = locales[currentLang];
-
-            if (appSettings.simMode || !appSettings.sarvamKey || !appSettings.anthropicKey) {
-                banner.className = "banner banner-demo";
-                bannerText.innerText = strings.demoBanner;
-            } else {
-                banner.className = "banner banner-live";
-                bannerText.innerText = strings.liveBanner;
-            }
+            // Banner removed per user request
         }
 
         // Toggle Simulation Mode checkbox

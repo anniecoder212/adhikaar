@@ -32,7 +32,7 @@ How to Apply: [How to register/apply]
 
 Do not write anything else. Keep it warm, simple, and respond ONLY in the same language as the user spoke (Language code: ${langCode}). Remember, respond in maximum 4 sentences per scheme.`;
 
-    const modelName = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
+    const modelName = process.env.ANTHROPIC_MODEL || 'claude-sonnet-4-6';
 
     try {
         const response = await fetch('https://api.anthropic.com/v1/messages', {
